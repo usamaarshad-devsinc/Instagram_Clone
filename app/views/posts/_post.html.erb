@@ -1,0 +1,29 @@
+<div class="card container-fluid" >
+  <% if (current_account == post.account) %>
+    <%= link_to 'Edit', edit_post_path(post) %>
+    <%= link_to 'Delete', post_path(post),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %>
+  <% end %>
+  <%#= image_tag ("Ruby.jpg") %>
+  <div class="card-body">
+    <strong><%= post.account.email %></strong>
+    <p class="card-text"><%= post.description %></p>
+    <div class="d-flex justify-content-around">
+    <div>
+    <%= form_with model: Like do |form|%>
+      <%= hidden_field_tag(:post_id, post.id) %>
+      <% total_likes=  total_likes_on_post(post) %>
+      <%= form.submit "Like (#{total_likes}) " , to: :like, class: "btn btn-primary" %>
+    <% end %>
+    </div>
+    <div >
+    <%= render partial: 'comments/form', locals: {post: post} %>
+    <% total_comments=  total_comments_on_post(post) %>
+    <% if total_comments > 0 %>
+      <%= link_to "#{total_comments} Comments", post_path(post) %>
+    <% end %>
+    </div>
+    </div>
+  </div>
+</div>

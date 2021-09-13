@@ -1,0 +1,18 @@
+<div class="card " >
+  <div class="card-header">
+    <%= form_with url: search_path, local:true, method: :get, class:"form-inline" do |form| %>
+      <%= form.text_field :username, class:"form-control mr-sm-2", placeholder:"Search" %>
+      <%= form.submit 'Search', to: search_path , class:"btn btn-outline-success my-2 my-sm-0"  %>
+    <% end %>
+  </div>
+  <div class="overflow-auto">
+    <ul class="list-group">
+      <% if @results and (@results.size > 0) %>
+        <%= render @results %>
+      <% else %>
+        <p><strong>Search Friends</strong></p>
+
+      <% end %>
+    </ul>
+  </div>
+</div>

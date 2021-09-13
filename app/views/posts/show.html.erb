@@ -1,0 +1,4 @@
+<%= render partial: 'post', locals: {post: @post} %>
+<ul class="list-group">
+  <%= render @comments, locals: {post: @post} %>
+</ul>

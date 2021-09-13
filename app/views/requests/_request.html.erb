@@ -1,0 +1,8 @@
+
+<li class="list-group-item">
+  <strong><%= request.sender.email %></strong>
+  <%= link_to 'Accept', request_path(request) , method: :put %> |
+  <%= link_to 'Reject', request_path(request),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }%>
+</li>

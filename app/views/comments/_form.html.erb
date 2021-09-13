@@ -1,0 +1,7 @@
+<%= form_with model: Comment do |form|%>
+  <p>
+    <%= hidden_field_tag(:post_id, post.id) %>
+    <%= form.text_field :text %>
+    <%= form.submit "Post Comment" , to: :comment, class: "btn btn-primary" %>
+  </p>
+<% end %>

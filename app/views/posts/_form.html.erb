@@ -1,0 +1,10 @@
+<h3>Creating New Post</h3>
+<%= form_with  model: @post do |form| %>
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+  <p>
+    <%= form.submit controller.action_name == 'new' ? 'Create' : 'Update', to: :post %>
+  </p>
+<% end %>
