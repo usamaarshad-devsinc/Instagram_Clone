@@ -3,6 +3,15 @@
 
   <p>
     <%= form.label :images %><br>
+
+    <p class="card-text">
+      <% if @post.images.attached? %>
+        <% (0...@post.images.count).each do |image|%>
+          <%= image_tag(@post.images[image], width: 500 )%>
+          <%= link_to 'Remove',to: @post.images[image].purge %>
+        <% end %>
+      <% end %>
+    </p>
     <%= form.file_field :images, multiple: :true %>
   </p>
   <p>

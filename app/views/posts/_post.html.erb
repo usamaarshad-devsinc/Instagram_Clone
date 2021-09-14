@@ -10,7 +10,7 @@
     <p class="card-text">
       <% if post.images.attached? %>
         <% (0...post.images.count).each do |image|%>
-          <%= image_tag(post.images[image])%>
+          <%= image_tag(post.images[image], width: 500 )%>
         <% end %>
       <% end %>
     </p>
