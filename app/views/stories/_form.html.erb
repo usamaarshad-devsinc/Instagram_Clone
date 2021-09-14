@@ -1,5 +1,15 @@
 <h3>Creating New Story</h3>
-<%= form_with  model: @story do |form| %>
+<%= form_with  model: @story, local: true do |form| %>
+  <p>
+    <%= form.label :image %><br>
+    <p class="card-text">
+      <% if @story.image.attached? %>
+        <%= image_tag(@story.image, width: 500 )%>
+        <%#= link_to 'Remove',to: @story.image.purge %>
+      <% end %>
+    </p>
+    <%= form.file_field :image , class:" d-inline-block"%>
+  </p>
   <p>
     <%= form.label :description %><br>
     <%= form.text_area :description %>

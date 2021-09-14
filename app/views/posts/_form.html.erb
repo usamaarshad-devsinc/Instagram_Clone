@@ -1,5 +1,5 @@
 <h3>Creating New Post</h3>
-<%= form_with  model: @post do |form| %>
+<%= form_with  model: @post, local: true do |form| %>
 
   <p>
     <%= form.label :images %><br>
@@ -8,11 +8,13 @@
       <% if @post.images.attached? %>
         <% (0...@post.images.count).each do |image|%>
           <%= image_tag(@post.images[image], width: 500 )%>
-          <%= link_to 'Remove',to: @post.images[image].purge %>
+          <%#= link_to 'Remove',to: @post.images[image].purge %>
         <% end %>
       <% end %>
     </p>
+    <p class="card-text d-inline-block">
     <%= form.file_field :images, multiple: :true %>
+    </p>
   </p>
   <p>
     <%= form.label :description %><br>

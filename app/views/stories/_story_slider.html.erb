@@ -1,0 +1,15 @@
+<div class="card container-fluid" >
+  <% if (current_account == story.account) %>
+    <%= link_to 'Edit', edit_story_path(story) %>
+    <%= link_to 'Delete', story_path(story),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %>
+  <% end %>
+  <div class="carousel-item active">
+      <%= image_tag(story.image, width: 500, class:"d-block w-100" ) if story.image.attached? %>
+        <div class="carousel-caption d-none d-md-block">
+          <h5><%= story.account.email %></h5>
+          <p><%= story.description %></p>
+        </div>
+    </div>
+</div>

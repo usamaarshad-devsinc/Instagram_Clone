@@ -18,7 +18,7 @@ class PostsController < ApplicationController
     post = current_account.posts.new(posts_params)
     if post.save
       flash[:notice] = 'Post was successfuly created.'
-      redirect_to controller: :public, action: :homepage
+      redirect_to post
     else
       flash[:notice] = 'Some errors occur in creating this post.'
       redirect_to controller: :public, action: :homepage
