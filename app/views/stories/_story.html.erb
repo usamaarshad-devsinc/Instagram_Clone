@@ -1,6 +1,6 @@
 <div class=" container-fluid" >
   <% if (current_account == story.account) %>
-    <%= link_to 'Edit', edit_story_path(story) %>
+    <%#= link_to 'Edit', edit_story_path(story) %>
     <%= link_to 'Delete', story_path(story),
               method: :delete,
               data: { confirm: 'Are you sure?' } %>
@@ -8,7 +8,7 @@
   <div class="card-body">
     <strong><%= story.account.email %></strong>
     <p class="card-text">
-      <%= image_tag(story.image, width: 500 ) if story.image.attached? %>
+      <%= image_tag(story.image, width: 400 ) if story.image.attached? %>
     </p>
     <strong><%= story.description %></strong>
   </div>
