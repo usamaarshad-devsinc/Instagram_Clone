@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   resources :likes
   resources :comments
   resources :requests
+  resources :stories
   post 'privacy', to: 'requests#toggle_privacy'
+  get 'profile', to: 'public#profile'
 end

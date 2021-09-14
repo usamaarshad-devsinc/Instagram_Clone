@@ -1,9 +1,8 @@
-
-<li class="list-group-item">
-  <strong><%= account.email %></strong>
-  <%= form_with model: Request do |form| %>
-    <%= hidden_field_tag(:recipient_id, account.id) %>
-    <%= current_account %>
-    <%= form.submit 'Follow', to: :request %>
-  <% end %>
-</li>
+<div class="card" >
+  <div class="card-body">
+    <h5 class="card-title"><%= account.username %></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><%= account.email %></h6>
+    <p class="card-text"><%= time_ago_in_words(account.created_at) %></p>
+    <%= link_to "View Profile", profile_path(account: account), class:"card-link" %>
+  </div>
+</div>
