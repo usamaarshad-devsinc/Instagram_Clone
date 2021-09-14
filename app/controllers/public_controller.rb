@@ -11,8 +11,6 @@ class PublicController < ApplicationController
       @posts.concat(req.recipient.posts)
     end
     @requests = Request.where(recipient_id: current_account.id, status: 'pending')
-    puts 'Results: ',@results ? @results : 'No Results Found'
-    # @data[:requests] = @requests
   end
 
   def search
@@ -22,4 +20,14 @@ class PublicController < ApplicationController
     @results
   end
 
+  def profile
+    puts params
+    @account = Account.find(params[:account])
+  end
+
+  private
+
+  def pending_requests()
+
+  end
 end

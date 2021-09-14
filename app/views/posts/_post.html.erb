@@ -5,9 +5,15 @@
               method: :delete,
               data: { confirm: 'Are you sure?' } %>
   <% end %>
-  <%#= image_tag ("Ruby.jpg") %>
   <div class="card-body">
     <strong><%= post.account.email %></strong>
+    <p class="card-text">
+      <% if post.images.attached? %>
+        <% (0...post.images.count).each do |image|%>
+          <%= image_tag(post.images[image])%>
+        <% end %>
+      <% end %>
+    </p>
     <p class="card-text"><%= post.description %></p>
     <div class="d-flex justify-content-around">
     <div>

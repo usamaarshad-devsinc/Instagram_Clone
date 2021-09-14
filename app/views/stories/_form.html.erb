@@ -1,0 +1,10 @@
+<h3>Creating New Story</h3>
+<%= form_with  model: @story do |form| %>
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+  <p>
+    <%= form.submit controller.action_name == 'new' ? 'Create' : 'Update', to: :story %>
+  </p>
+<% end %>

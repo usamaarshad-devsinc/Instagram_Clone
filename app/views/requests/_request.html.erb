@@ -1,8 +1,11 @@
-
-<li class="list-group-item">
-  <strong><%= request.sender.email %></strong>
-  <%= link_to 'Accept', request_path(request) , method: :put %> |
-  <%= link_to 'Reject', request_path(request),
-              method: :delete,
-              data: { confirm: 'Are you sure?' }%>
-</li>
+<div class="card" >
+  <div class="card-body">
+    <h5 class="card-title"><%= request.sender.username %></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><%= request.sender.email %></h6>
+    <p class="card-text"><%= time_ago_in_words(request.created_at) %></p>
+    <%= link_to 'Accept', request_path(request) , method: :put, class:"card-link" %> |
+    <%= link_to 'Reject', request_path(request),
+                method: :delete,
+                data: { confirm: 'Are you sure?' }, class:"card-link" %>
+  </div>
+</div>

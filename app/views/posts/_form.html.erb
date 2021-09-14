@@ -1,5 +1,10 @@
 <h3>Creating New Post</h3>
 <%= form_with  model: @post do |form| %>
+
+  <p>
+    <%= form.label :images %><br>
+    <%= form.file_field :images, multiple: :true %>
+  </p>
   <p>
     <%= form.label :description %><br>
     <%= form.text_area :description %>

@@ -1,0 +1,43 @@
+<h5><strong>Profile</strong></h5>
+<div class="d-flex justify-content-center">
+  <div class="card container col-4 d-flex align-items-center">
+    <div class="card col-4"></div>
+    <div class="card col-4">
+      <div class="card-body text-align-left">
+        <p class="card-text"><strong><%= account.username %></strong></p>
+        <a href="#" class="card-link"><%= account.email %></a>
+        <p class="card-text"><strong>Joined: </strong><%= time_ago_in_words(account.created_at) %></p>
+
+        <%= form_with model: Request, local:true do |form| %>
+          <%= hidden_field_tag(:recipient_id, account.id) %>
+          <% if account.id != current_account.id %>
+            <% @value = already_followed?( account.id, current_account.id) ? 'Unfollow' : 'Follow' %>
+            <%= form.submit "#{@value}", to: :request, class:"card-link" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <br/>
+    <div class="card col-4" >
+      <div class="card-header">
+        <% @list = followers_list(account) %>
+        <h5 class="title"><strong>Followers (<%= @list.size %>) <strong></h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% @list.each do |acc|%>
+          <li class="list-group-item"><%= link_to "#{acc.email}", profile_path(account: acc) %></li>
+        <% end %>
+      </ul>
+      <div class="card-header">
+        <% @list = followees_list(account) %>
+        <h5 class="title"><strong>Following (<%= @list.size %>) <strong></h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% @list.each do |acc|%>
+          <li class="list-group-item"><%= link_to "#{acc.email}", profile_path(account: acc) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+

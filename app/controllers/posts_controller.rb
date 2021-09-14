@@ -14,8 +14,8 @@ class PostsController < ApplicationController
   end
 
   def create
-    description = posts_params[:description]
-    post = Post.new(description: description, account_id: current_account.id)
+    # description = posts_params[:description]
+    post = current_account.posts.new(posts_params)
     if post.save
       flash[:notice] = 'Post was successfuly created.'
       redirect_to controller: :public, action: :homepage
@@ -31,7 +31,8 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    if @post.update(posts_params)
+    puts posts_params
+    if @post.update!(posts_params)
       redirect_to @post, notice: 'Post was successfuly updated.'
     else
       render 'edit'
@@ -55,6 +56,6 @@ class PostsController < ApplicationController
 
   def posts_params
     # puts params
-    params.require(:post).permit(:description)
+    params.require(:post).permit(:description, images: [])
   end
 end
