@@ -3,6 +3,19 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
+    <p>
+    <%= f.label :profile_pic %><br>
+    <p class="card-text">
+      <% if current_account.profile_pic.attached? %>
+        <%= image_tag(current_account.profile_pic, width: 300,class:"rounded border-top-0 ")  %>
+        <%#= link_to 'Remove',to: @post.images[image].purge %>
+      <% else %>
+        <%= image_tag('default.png', width: 300,class:"rounded border-top-0 ")  %>
+      <% end %>
+    </p>
+    <%= f.file_field :profile_pic , class: "d-inline-block"%>
+  </p>
+
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
