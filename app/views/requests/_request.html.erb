@@ -1,5 +1,15 @@
 <div class="card" >
   <div class="card-body">
+        <p>
+          <p class="card-text">
+            <% if request.sender.profile_pic.attached? %>
+              <%= image_tag(request.sender.profile_pic, width: 70,class:"rounded-circle border-top-0 ")  %>
+              <%#= link_to 'Remove',to: @post.images[image].purge %>
+            <% else %>
+              <%= image_tag('default.png', width: 70,class:"rounded-circle border-top-0 ")  %>
+            <% end %>
+          </p>
+        </p>
     <h5 class="card-title"><%= request.sender.username %></h5>
     <h6 class="card-subtitle mb-2 text-muted"><%= request.sender.email %></h6>
     <p class="card-text"><%= time_ago_in_words(request.created_at) %></p>

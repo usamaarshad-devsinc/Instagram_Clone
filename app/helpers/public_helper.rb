@@ -1,6 +1,6 @@
 module PublicHelper
-  def search_friends(username)
-    Account.where('email LIKE ?', "%#{username}%" )
+  def search_friends(email)
+    Account.where('email LIKE ?', "%#{email}%" )
   end
 
   def followees_list(account)

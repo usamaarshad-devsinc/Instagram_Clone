@@ -4,10 +4,22 @@
     <div class="card col-4"></div>
     <div class="card col-4">
       <div class="card-body text-align-left">
+        <p>
+          <p class="card-text">
+            <% if account.profile_pic.attached? %>
+              <%= image_tag(account.profile_pic, width: 120,class:"rounded-circle border-top-0 ")  %>
+              <%#= link_to 'Remove',to: @post.images[image].purge %>
+            <% else %>
+              <%= image_tag('default.png', width: 120,class:"rounded-circle border-top-0 ")  %>
+            <% end %>
+          </p>
+        </p>
         <p class="card-text"><strong><%= account.username %></strong></p>
         <a href="#" class="card-link"><%= account.email %></a>
         <p class="card-text"><strong>Joined: </strong><%= time_ago_in_words(account.created_at) %></p>
-
+        <% if account.id == current_account.id %>
+          <%= link_to 'Edit Profile', edit_account_registration_path %>
+        <% end %>
         <%= form_with model: Request, local:true do |form| %>
           <%= hidden_field_tag(:recipient_id, account.id) %>
           <% if account.id != current_account.id %>
