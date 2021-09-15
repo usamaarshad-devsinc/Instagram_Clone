@@ -13,8 +13,8 @@ class Post < ApplicationRecord
 
   def presence_check
     # For extra fields added in Devise.
-    if [self.images, self.description].reject(&:blank?).size == 0
-      errors[:base] << ("You can't create an empty post [no description and no image].")
+    if self.images.size == 0
+      errors[:base] << ("You can't create an empty post [no image].")
     else
       restrict_number_of_images
     end

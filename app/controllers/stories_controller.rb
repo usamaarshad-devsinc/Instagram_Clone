@@ -13,8 +13,15 @@ class StoriesController < ApplicationController
   end
 
   def create
-    @story = current_account.stories.create(story_params)
-    redirect_to @story
+    @story = current_account.stories.new(story_params)
+    if @story.save
+      flash[:notice] = 'Post was successfuly created.'
+      redirect_to @story
+    else
+      flash[:notice] = 'Some errors occur in creating this story.'
+      flash[:notice] += @story.errors.messages[:base].to_s
+      redirect_to new_story_path(@story)
+    end
   end
 
   def show
