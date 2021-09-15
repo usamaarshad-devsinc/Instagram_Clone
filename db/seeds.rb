@@ -5,8 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-account1 = Account.create(email, passsword)
-account2 = Account.create(email, passsword)
-r = Request.new
-r.sender = account1
-r.recipient = account2
+# account1 = Account.create(email, passsword)
+# account2 = Account.create(email, passsword)
+# r = Request.new
+# r.sender = account1
+# r.recipient = account2
