@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 <h1>HomePage</h1>
 
-<%= link_to 'Profile', profile_path(account: current_account) %>
-<%= link_to 'Create Post', new_post_path %>
+<%= link_to 'Profile', profile_path(account: current_account) %> |
+<%= link_to 'Create Post', new_post_path %> |
 <%= link_to 'Create Story', new_story_path %>
 <%= form_with url: privacy_path, :id => "rsvp" do |form| %>
   <div class="form-check form-switch d-flex justify-content-start">
@@ -27,6 +27,19 @@
         <%= form.submit 'Search', to: search_path , class:"btn btn-outline-success my-2 my-sm-0"  %>
       <% end %>
     </div>
+      <div class="card-header">
+        Stories
+      </div>
+      <div class="overflow-auto">
+        <ul class="list-group">
+          <% if @stories.size > 0 %>
+            <%= render @stories %>
+          <% else %>
+            <p><strong>No Stories to show</strong></p>
+          <% end %>
+        </ul>
+      </div>
+
   </div>
   <div class="card container" >
     <%= render @posts %>
