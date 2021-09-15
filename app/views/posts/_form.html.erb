@@ -1,5 +1,6 @@
 <h3>Creating New Post</h3>
 <%= form_with  model: @post, local: true do |form| %>
+  <%= render "devise/shared/error_messages", resource: @post %>
 
   <p>
     <%= form.label :images %><br>

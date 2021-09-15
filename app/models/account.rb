@@ -5,7 +5,7 @@ class Account < ApplicationRecord
          :recoverable, :rememberable, :validatable
   validate :presence_check
   after_create Proc.new{ self.is_private = false}
-  has_one_attached :profile_pic
+  has_one_attached :profile_pic, dependent: :destroy
   has_many :stories, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :likes, dependent: :destroy

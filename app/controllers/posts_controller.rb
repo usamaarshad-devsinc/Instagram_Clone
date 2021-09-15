@@ -15,13 +15,14 @@ class PostsController < ApplicationController
 
   def create
     # description = posts_params[:description]
-    post = current_account.posts.new(posts_params)
-    if post.save
+    @post = current_account.posts.new(posts_params)
+    if @post.save
       flash[:notice] = 'Post was successfuly created.'
-      redirect_to post
+      redirect_to @post
     else
       flash[:notice] = 'Some errors occur in creating this post.'
-      redirect_to controller: :public, action: :homepage
+      flash[:notice] += @post.errors.messages[:base].to_s
+      redirect_to new_post_path(@post)
     end
   end
 
