@@ -1,16 +1,19 @@
-<div class="card container-fluid" >
+<div class="d-table-caption container-fluid rounded"  >
   <% if (current_account == post.account) %>
     <%= link_to 'Edit', edit_post_path(post) %>
     <%= link_to 'Delete', post_path(post),
               method: :delete,
               data: { confirm: 'Are you sure?' } %>
   <% end %>
-  <div class="card-body">
+  <div class="card-header">
     <strong><%= post.account.email %></strong>
+  </div>
+  <div class="card-body">
+
     <p class="card-text">
       <% if post.images.attached? %>
         <% (0...post.images.count).each do |image|%>
-          <%= image_tag(post.images[image], width: 500 )%>
+          <%= image_tag(post.images[image], width: 500, class:' rounded' )%>
         <% end %>
       <% end %>
     </p>
