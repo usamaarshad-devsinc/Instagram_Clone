@@ -4,6 +4,7 @@ class Account < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validate :presence_check
+  after_create Proc.new{ self.is_private = false}
   has_one_attached :profile_pic
   has_many :stories, dependent: :destroy
   has_many :posts, dependent: :destroy
