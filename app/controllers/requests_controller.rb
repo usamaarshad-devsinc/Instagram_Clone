@@ -10,6 +10,8 @@ class RequestsController < ApplicationController
       request.status = recipient.is_private ? 'pending' : 'accepted'
       puts request.inspect
       request.save
+      # send_mail(recipient)
+      UserMailer.with(user: recipient).welcome_email.deliver_later
     end
     redirect_to controller: :public, action: :profile, account: recipient_id
   end
@@ -43,6 +45,15 @@ class RequestsController < ApplicationController
 
   def already_followed?(recipient_id, sender_id)
     Request.exists?(recipient_id: recipient_id, sender_id: sender_id)
+  end
+
+  def send_mail(user)
+    respond_to do |format|
+        # Tell the UserMailer to send a welcome email after save
+        UserMailer.with(user: @user).welcome_email.deliver_later
+        format.html { redirect_to(@user, notice: 'User was successfully created.') }
+        format.json { render json: @user, status: :created, location: @user }
+    end
   end
 
 end
