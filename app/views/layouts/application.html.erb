@@ -10,11 +10,8 @@
   </head>
 
   <body class = "container-fluid justify-content-around text-center">
+    <%= render partial: 'layouts/navbar' %>
     <%if account_signed_in? %>
-      <nav class="navbar navbar-light">
-        <a class="navbar-brand">Instagram Clone</a>
-      <%= link_to 'Home', root_path, class:"card-link" %>
-      </nav>
       Signed in as  <%= current_account.email %>. Not you? <%= link_to 'Sign out', destroy_account_session_path , method: :delete, data: { confirm: 'Are you sure?' } %>
     <% else %>
       <!-- Image and text -->
