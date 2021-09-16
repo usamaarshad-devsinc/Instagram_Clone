@@ -11,7 +11,7 @@ class LikesController < ApplicationController
   def destroy
     flash[:notice] = "Successfully unliked."
     Like.where(account_id: current_account.id, post_id: params[:post_id]).first.destroy
-    redirect_to controller: :public, action: :homepage, notice: 'Post was successfuly unliked.'
+    redirect_to root_path, notice: 'Post was successfuly unliked.'
   end
 
   private
@@ -25,10 +25,10 @@ class LikesController < ApplicationController
     like = Like.new(account_id: current_account.id, post_id: post_id)
     if like.save
     flash[:notice] = "Post was successfuly liked."
-    redirect_to controller: :public, action: :homepage, notice: 'Post was successfuly liked.'
+    redirect_to root_path, notice: 'Post was successfuly liked.'
     else
     flash[:notice] = "Some errors occur in liking this post."
-    redirect_to controller: :public, action: :homepage, notice: 'Some errors occur in liking this post.'
+    redirect_to root_path, notice: 'Some errors occur in liking this post.'
     end
   end
 

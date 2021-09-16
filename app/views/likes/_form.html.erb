@@ -1,0 +1,9 @@
+    <div class="d-flex justify-content-around">
+      <div>
+        <%= form_with( model: [ post, post.likes.build ], remote: true) do |form|%>
+          <%= hidden_field_tag(:post_id, post.id) %>
+          <% total_likes=  total_likes_on_post(post) %>
+          <%= form.submit "Like (#{total_likes}) " , to: :like, class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    <div >

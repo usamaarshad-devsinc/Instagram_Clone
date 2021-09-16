@@ -3,13 +3,12 @@
 
     <div class="d-flex">
       <div>
-          <% if post.account.profile_pic.attached? %>
-            <%= image_tag(post.account.profile_pic, width: 20,class:"rounded-circle border-top-0 ")  %>
-            <%#= link_to 'Remove',to: @post.images[image].purge %>
-          <% else %>
-            <%= image_tag('default.png', width: 20,class:"rounded-circle border-top-0 ")  %>
-          <% end %>
-
+        <% if post.account.profile_pic.attached? %>
+          <%= image_tag(post.account.profile_pic, width: 20,class:"rounded-circle border-top-0 ")  %>
+          <%#= link_to 'Remove',to: @post.images[image].purge %>
+        <% else %>
+          <%= image_tag('default.png', width: 20,class:"rounded-circle border-top-0 ")  %>
+        <% end %>
       </div>&nbsp;&nbsp;&nbsp;&nbsp;
       <strong><%= post.account.email %></strong>
     </div>
@@ -18,12 +17,11 @@
       <%= link_to 'Edit', edit_post_path(post) %> |
       <%= link_to 'Delete', post_path(post),
                 method: :delete,
-                data: { confirm: 'Are you sure?' } %>
+                data: { confirm: 'Are you sure?' }, remote: true %>
     <% end %>
     </div>
   </div>
   <div class="card-body">
-
     <p class="card-text">
       <% if post.images.attached? %>
         <% (0...post.images.count).each do |image|%>
@@ -32,20 +30,8 @@
       <% end %>
     </p>
     <p class="card-text"><%= post.description %></p>
-    <div class="d-flex justify-content-around">
-    <div>
-    <%= form_with model: Like do |form|%>
-      <%= hidden_field_tag(:post_id, post.id) %>
-      <% total_likes=  total_likes_on_post(post) %>
-      <%= form.submit "Like (#{total_likes}) " , to: :like, class: "btn btn-primary" %>
-    <% end %>
-    </div>
-    <div >
+    <%= render 'likes/form', post: post %>
     <%= render partial: 'comments/form', locals: {post: post} %>
-    <% total_comments=  total_comments_on_post(post) %>
-    <% if total_comments > 0 %>
-      <%= link_to "#{total_comments} Comments", post_path(post) %>
-    <% end %>
     </div>
     </div>
   </div>

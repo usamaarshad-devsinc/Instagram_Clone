@@ -3,20 +3,12 @@ class Post < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many_attached :images, dependent: :destroy
-  validate :presence_check
+  validate :restrict_number_of_images
+
+  private
 
   def restrict_number_of_images
-    if images.size > 10
-      errors[:base] << ("Post can't have more than 10 images.")
-    end
-  end
-
-  def presence_check
-    # For extra fields added in Devise.
-    if self.images.size == 0
-      errors[:base] << ("You can't create an empty post [no image].")
-    else
-      restrict_number_of_images
-    end
+    errors[:base] << ("You can't create an empty post [no image].") unless images.attached?
+    errors[:base] << ("Post can't have more than 10 images.") unless (images.size <= 10)
   end
 end

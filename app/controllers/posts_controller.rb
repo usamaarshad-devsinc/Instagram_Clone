@@ -1,7 +1,17 @@
 class PostsController < ApplicationController
+
   def index
-    @account = Account.find(params[:account_id])
-    @posts = @account.posts
+    @user = current_account
+    puts "current user: #{@user.email}", @user.posts
+    @posts = @user.posts
+    @stories = @user.stories
+    requests = Request.where(sender: @user, status: 'accepted')
+    requests.each do |req|
+      puts req.recipient.posts
+      @posts.concat(req.recipient.posts)
+      @stories.concat(req.recipient.stories)
+    end
+    @requests = Request.where(recipient_id: current_account.id, status: 'pending')
   end
 
   def home_page
@@ -20,8 +30,7 @@ class PostsController < ApplicationController
       flash[:notice] = 'Post was successfuly created.'
       redirect_to @post
     else
-      flash[:notice] = 'Some errors occur in creating this post.'
-      flash[:notice] += @post.errors.messages[:base].to_s
+      flash[:notice] = @post.errors.messages[:base].to_s
       redirect_to new_post_path(@post)
     end
   end
@@ -43,7 +52,7 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     if @post.destroy
-      redirect_to controller: :public, action: :homepage, notice: 'Post was successfuly deleted.'
+      redirect_to root_path, notice: 'Post was successfuly deleted.'
     end
   end
 

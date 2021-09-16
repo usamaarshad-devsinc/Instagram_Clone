@@ -1,10 +1,9 @@
 <h3>Creating New Post</h3>
-<%= form_with  model: @post, local: true do |form| %>
+<%= form_with  model: @post, remote: true do |form| %>
   <%= render "devise/shared/error_messages", resource: @post %>
 
   <p>
     <%= form.label :images %><br>
-
     <p class="card-text">
       <% if @post.images.attached? %>
         <% (0...@post.images.count).each do |image|%>
@@ -22,6 +21,6 @@
     <%= form.text_area :description %>
   </p>
   <p>
-    <%= form.submit controller.action_name == 'new' ? 'Create' : 'Update', to: :post %>
+    <%= form.submit btn_text, to: :post %>
   </p>
 <% end %>
