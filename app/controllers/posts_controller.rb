@@ -3,8 +3,8 @@ class PostsController < ApplicationController
   def index
     @user = current_account
     puts "current user: #{@user.email}", @user.posts
-    @posts = @user.posts
-    @stories = @user.stories
+    @posts = [].concat @user.posts
+    @stories = [].concat @user.stories
     requests = Request.where(sender: @user, status: 'accepted')
     requests.each do |req|
       puts req.recipient.posts
@@ -41,7 +41,6 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    puts posts_params
     if @post.update!(posts_params)
       redirect_to @post, notice: 'Post was successfuly updated.'
     else
