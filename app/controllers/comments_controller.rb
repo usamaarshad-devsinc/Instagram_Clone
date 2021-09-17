@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
+  before_action :load_comment, only: %i[edit update destroy]
   def create
     post_id = params[:post_id]
     text = comments_params[:text]
@@ -13,12 +14,9 @@ class CommentsController < ApplicationController
     end
   end
 
-  def edit
-    @comment = Comment.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @comment = Comment.find(params[:id])
     if @comment.update(comments_params)
       redirect_to post_path(@comment.post), notice: 'Comment was successfuly updated.'
     else
@@ -27,14 +25,16 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
     redirect_to post_path(@comment.post), notice: 'Comment was successfuly deleted.' if @comment.destroy
   end
 
   private
 
   def comments_params
-    # puts params
     params.require(:comment).permit(:text)
+  end
+
+  def load_comment
+    @comment = Comment.find(params[:id])
   end
 end

@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action
+  before_action :load_post, only: %i[edit update destroy show]
+  before_action :load_account, only: %i[index homepage]
   def index
-    @user = current_account
     load_posts_and_stories
-    @requests = Request.where(recipient_id: @user.id, status: 'pending')
+    @requests = Request.where(recipient_id: @account.id, status: 'pending')
   end
 
   def home_page
-    @account = current_account
     @account.followees
   end
 
@@ -23,31 +22,27 @@ class PostsController < ApplicationController
       flash[:notice] = 'Post was successfuly created.'
       redirect_to @post
     else
-      flash[:notice] = @post.errors.messages[:base].to_s
+      flash[:notice] = @post.errors.messages[:base]
       redirect_to new_post_path(@post)
     end
   end
 
-  def edit
-    @post = Post.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @post = Post.find(params[:id])
     if @post.update!(posts_params)
-      redirect_to @post, notice: 'Post was successfuly updated.'
+      flash[:notice] = 'Post was successfuly updated.'
+      redirect_to @post
     else
       render 'edit'
     end
   end
 
   def destroy
-    @post = Post.find(params[:id])
     redirect_to root_path, notice: 'Post was successfuly deleted.' if @post.destroy
   end
 
   def show
-    @post = Post.find(params[:id])
     @comments = @post.comments
   end
 
@@ -58,13 +53,20 @@ class PostsController < ApplicationController
   end
 
   def load_posts_and_stories
-    @posts = [].concat @user.posts
-    @stories = [].concat @user.stories
-    requests = Request.where(sender: @user, status: 'accepted')
+    @posts = [].concat @account.posts
+    @stories = [].concat @account.stories
+    requests = Request.where(sender: @account, status: 'accepted')
     requests.each do |req|
-      Rails.logger.debug req.recipient.posts
       @posts.concat(req.recipient.posts)
       @stories.concat(req.recipient.stories)
     end
+  end
+
+  def load_post
+    @post = Post.find(params[:id])
+  end
+
+  def load_account
+    @account = current_account
   end
 end

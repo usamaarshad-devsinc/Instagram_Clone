@@ -26,7 +26,7 @@
           <% if account.id == current_account.id %>
             <%= link_to 'Edit Profile', edit_account_registration_path %>
           <% end %>
-          <%= form_with model: Request, local:true do |form| %>
+          <%= form_with model: Request, remote:true do |form| %>
             <%= hidden_field_tag(:recipient_id, account.id) %>
             <% if account.id != current_account.id %>
               <% @value = already_followed?( account.id, current_account.id) ? 'Unfollow' : 'Follow' %>
