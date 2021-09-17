@@ -1,5 +1,6 @@
-class CommentsController < ApplicationController
+# frozen_string_literal: true
 
+class CommentsController < ApplicationController
   def create
     post_id = params[:post_id]
     text = comments_params[:text]
@@ -27,9 +28,7 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    if @comment.destroy
-      redirect_to post_path(@comment.post), notice: 'Comment was successfuly deleted.'
-    end
+    redirect_to post_path(@comment.post), notice: 'Comment was successfuly deleted.' if @comment.destroy
   end
 
   private
@@ -38,6 +37,4 @@ class CommentsController < ApplicationController
     # puts params
     params.require(:comment).permit(:text)
   end
-
 end
-

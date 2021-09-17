@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Post < ApplicationRecord
   belongs_to :account
   has_many :likes, dependent: :destroy
@@ -9,6 +11,6 @@ class Post < ApplicationRecord
 
   def restrict_number_of_images
     errors[:base] << ("You can't create an empty post [no image].") unless images.attached?
-    errors[:base] << ("Post can't have more than 10 images.") unless (images.size <= 10)
+    errors[:base] << ("Post can't have more than 10 images.") unless images.size <= 10
   end
 end

@@ -1,17 +1,10 @@
-class PostsController < ApplicationController
+# frozen_string_literal: true
 
+class PostsController < ApplicationController
   def index
     @user = current_account
-    puts "current user: #{@user.email}", @user.posts
-    @posts = [].concat @user.posts
-    @stories = [].concat @user.stories
-    requests = Request.where(sender: @user, status: 'accepted')
-    requests.each do |req|
-      puts req.recipient.posts
-      @posts.concat(req.recipient.posts)
-      @stories.concat(req.recipient.stories)
-    end
-    @requests = Request.where(recipient_id: current_account.id, status: 'pending')
+    load_posts_and_stories
+    @requests = Request.where(recipient_id: @user.id, status: 'pending')
   end
 
   def home_page
@@ -50,13 +43,11 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    if @post.destroy
-      redirect_to root_path, notice: 'Post was successfuly deleted.'
-    end
+    redirect_to root_path, notice: 'Post was successfuly deleted.' if @post.destroy
   end
 
   def show
-    puts params
+    Rails.logger.debug params
     @post = Post.find(params[:id])
     @comments = @post.comments
   end
@@ -66,5 +57,16 @@ class PostsController < ApplicationController
   def posts_params
     # puts params
     params.require(:post).permit(:description, images: [])
+  end
+
+  def load_posts_and_stories
+    @posts = [].concat @user.posts
+    @stories = [].concat @user.stories
+    requests = Request.where(sender: @user, status: 'accepted')
+    requests.each do |req|
+      Rails.logger.debug req.recipient.posts
+      @posts.concat(req.recipient.posts)
+      @stories.concat(req.recipient.stories)
+    end
   end
 end

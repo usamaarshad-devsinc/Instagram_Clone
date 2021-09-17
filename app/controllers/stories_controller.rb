@@ -1,5 +1,6 @@
-class StoriesController < ApplicationController
+# frozen_string_literal: true
 
+class StoriesController < ApplicationController
   def index
     @stories = [].concat current_account.stories
     requests = current_account.requests_sent.where(status: 'accepted')
@@ -29,14 +30,12 @@ class StoriesController < ApplicationController
 
   def destroy
     @story = Story.find(params[:id])
-    if @story.destroy
-      redirect_to root_path, notice: 'Story was successfuly deleted.'
-    end
+    redirect_to root_path, notice: 'Story was successfuly deleted.' if @story.destroy
   end
 
   private
 
   def story_params
-    params.require(:story).permit(:description,:image)
+    params.require(:story).permit(:description, :image)
   end
 end
