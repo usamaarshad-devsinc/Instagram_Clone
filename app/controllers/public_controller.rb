@@ -17,14 +17,10 @@ class PublicController < ApplicationController
   # end
 
   def search
-    Rails.logger.debug params
     @results = search_friends(params[:username])
-    Rails.logger.debug @results
-    @results
   end
 
   def profile
-    Rails.logger.debug params
     @account = Account.find(params[:account])
   end
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  before_action
   def index
     @user = current_account
     load_posts_and_stories
@@ -17,7 +18,6 @@ class PostsController < ApplicationController
   end
 
   def create
-    # description = posts_params[:description]
     @post = current_account.posts.new(posts_params)
     if @post.save
       flash[:notice] = 'Post was successfuly created.'
@@ -47,7 +47,6 @@ class PostsController < ApplicationController
   end
 
   def show
-    Rails.logger.debug params
     @post = Post.find(params[:id])
     @comments = @post.comments
   end
@@ -55,7 +54,6 @@ class PostsController < ApplicationController
   private
 
   def posts_params
-    # puts params
     params.require(:post).permit(:description, images: [])
   end
 

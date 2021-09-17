@@ -6,6 +6,6 @@ class Request < ApplicationRecord
 
   validates  :status, presence: true
 
-  enum status: { accepted: 0, pending: 1 }
-  scope :requested, ->(sender_id, recipient_id) { where(sender_id: sender_id, recipient_id: recipient_id) }
+  # enum status: { accepted: 0, pending: 1 }
+  # scope :requested, ->(sender_id, recipient_id) { where(sender_id: sender_id, recipient_id: recipient_id) }
 end
