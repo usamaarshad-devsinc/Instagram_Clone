@@ -24,7 +24,7 @@ class Accounts::RegistrationsController < Devise::RegistrationsController
   def update
     #super
     puts '...................................................Update Called'
-    account_params = params.require(:account).permit(:full_name,:username,:profile_pic)
+    account_params = params.require(:account).permit(:full_name,:username,:profile_pic, :is_private)
     puts account_params
     current_account.update!(account_params)
   end

@@ -1,0 +1,38 @@
+
+
+<div class="d-flex">
+  <% if @stories.size > 0 %>
+    <div class="card" >
+      <div class="card-header">
+        Stories
+      </div>
+      <div class="overflow-auto">
+        <ul class="list-group">
+          <%= render @stories %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class=" container d-table-caption">
+    <div class = "centralize" >
+      <%#<div><h1>Posts</h1></div>%>
+      <div class="card-header " >
+        <%= 'Post Something' unless @posts.present? %>
+        <%= render @posts %>
+      </div>
+    </div>
+  </div>
+  <% if @requests.size > 0 %>
+    <div class="card col-2" >
+      <div class="card-header">
+        Requests
+      </div>
+      <div class="overflow-auto">
+        <ul class="list-group">
+          <%= render @requests %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>

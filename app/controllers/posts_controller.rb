@@ -1,7 +1,17 @@
 class PostsController < ApplicationController
+
   def index
-    @account = Account.find(params[:account_id])
-    @posts = @account.posts
+    @user = current_account
+    puts "current user: #{@user.email}", @user.posts
+    @posts = [].concat @user.posts
+    @stories = [].concat @user.stories
+    requests = Request.where(sender: @user, status: 'accepted')
+    requests.each do |req|
+      puts req.recipient.posts
+      @posts.concat(req.recipient.posts)
+      @stories.concat(req.recipient.stories)
+    end
+    @requests = Request.where(recipient_id: current_account.id, status: 'pending')
   end
 
   def home_page
@@ -15,13 +25,13 @@ class PostsController < ApplicationController
 
   def create
     # description = posts_params[:description]
-    post = current_account.posts.new(posts_params)
-    if post.save
+    @post = current_account.posts.new(posts_params)
+    if @post.save
       flash[:notice] = 'Post was successfuly created.'
-      redirect_to post
+      redirect_to @post
     else
-      flash[:notice] = 'Some errors occur in creating this post.'
-      redirect_to controller: :public, action: :homepage
+      flash[:notice] = @post.errors.messages[:base].to_s
+      redirect_to new_post_path(@post)
     end
   end
 
@@ -31,7 +41,6 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    puts posts_params
     if @post.update!(posts_params)
       redirect_to @post, notice: 'Post was successfuly updated.'
     else
@@ -42,7 +51,7 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     if @post.destroy
-      redirect_to controller: :public, action: :homepage, notice: 'Post was successfuly deleted.'
+      redirect_to root_path, notice: 'Post was successfuly deleted.'
     end
   end
 

@@ -10,14 +10,8 @@
   </head>
 
   <body class = "container-fluid justify-content-around text-center">
-    <%if account_signed_in? %>
-      <nav class="navbar navbar-light">
-        <a class="navbar-brand">Instagram Clone</a>
-      <%= link_to 'Home', root_path, class:"card-link" %>
-      </nav>
-      Signed in as  <%= current_account.email %>. Not you? <%= link_to 'Sign out', destroy_account_session_path , method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% else %>
-      <!-- Image and text -->
+    <%= render partial: 'layouts/navbar' %>
+    <%if !account_signed_in? %>
       <nav class="navbar navbar-light fs-9">
         <a class="navbar-brand" href="#">
           Instagram Clone
@@ -25,8 +19,8 @@
       </nav>
       <%= link_to 'Sign Up', new_account_registration_path %> or <%= link_to 'Sign in', new_account_session_path %>
     <% end %>
+    <p id="notice" ><%= notice %></p>
+    <%#= render "devise/shared/error_messages", resource: resource %>
     <%= yield %>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -1,5 +1,4 @@
 class PublicController < ApplicationController
-  before_action :authenticate_account!
   include PublicHelper
   def homepage
     @user = current_account

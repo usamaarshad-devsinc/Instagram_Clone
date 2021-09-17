@@ -16,7 +16,7 @@ gem 'devise'
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'sass-rails', '~> 5.0'
-# gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
+gem 'bootstrap'
 
 gem 'jquery-rails'
 # Use Uglifier as compressor for JavaScript assets

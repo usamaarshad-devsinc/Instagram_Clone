@@ -13,8 +13,14 @@ class StoriesController < ApplicationController
   end
 
   def create
-    @story = current_account.stories.create(story_params)
-    redirect_to @story
+    @story = current_account.stories.new(story_params)
+    if @story.save
+      flash[:notice] = 'Post was successfuly created.'
+      redirect_to root_path
+    else
+      flash[:notice] = @story.errors.full_messages
+      redirect_to new_story_path(@story)
+    end
   end
 
   def show
@@ -24,21 +30,7 @@ class StoriesController < ApplicationController
   def destroy
     @story = Story.find(params[:id])
     if @story.destroy
-      redirect_to controller: :public, action: :homepage, notice: 'Story was successfuly deleted.'
-    end
-  end
-
-  def edit
-    @story = Story.find(params[:id])
-  end
-
-  def update
-    @story = Story.find(params[:id])
-    puts story_params
-    if @story.update!(story_params)
-      redirect_to @story, notice: 'Story was successfuly updated.'
-    else
-      render 'edit'
+      redirect_to root_path, notice: 'Story was successfuly deleted.'
     end
   end
 

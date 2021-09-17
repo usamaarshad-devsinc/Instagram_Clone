@@ -1,9 +1,18 @@
 class Story < ApplicationRecord
   has_one_attached :image
   belongs_to :account
+  validate  :presence_check
   after_create :set_expiry
 
+  private
+
+  def presence_check
+    if !image.attached?
+      errors[:base] << ("You can't create an empty story [no image].")
+    end
+  end
+
   def set_expiry
-    StoryExpiresJob.set(wait: 1.day).perform_later(id)
+    StoryExpiresJob.set(wait: 20.seconds).perform_later(id)
   end
 end
