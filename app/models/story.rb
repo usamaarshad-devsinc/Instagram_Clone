@@ -2,7 +2,7 @@ class Story < ApplicationRecord
   has_one_attached :image
   belongs_to :account
   validate  :presence_check
-  # after_create :set_expiry
+  after_create :set_expiry
 
   private
 

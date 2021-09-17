@@ -1,19 +1,5 @@
 
-<%= form_with url: privacy_path, :id => "rsvp", remote: true do |form| %>
-  <div class="form-check form-switch d-flex justify-content-start">
-    <% if current_account.is_private  %>
-      <%= form.submit 'true', class:"form-check-input", type:"checkbox", id:"flexSwitchCheckDefault",
-        checked: true, :onclick => "$('#rsvp').submit()"
-      %>&nbsp;
-      <%= form.label:Private, class:"form-check-label", for:"flexSwitchCheckDefault" %>
-    <% else %>
-      <%= form.submit 'false', class:"form-check-input", type:"checkbox", id:"flexSwitchCheckDefault",
-        checked: false, :onclick => "$('#rsvp').submit()"
-      %>&nbsp;
-      <%= form.label:Public, class:"form-check-label", for:"flexSwitchCheckDefault" %>
-    <% end%>
-  </div>
-<% end %>
+
 <div class="d-flex">
   <% if @stories.size > 0 %>
     <div class="card" >
@@ -32,6 +18,7 @@
     <div class = "centralize" >
       <%#<div><h1>Posts</h1></div>%>
       <div class="card-header " >
+        <%= 'Post Something' unless @posts.present? %>
         <%= render @posts %>
       </div>
     </div>
