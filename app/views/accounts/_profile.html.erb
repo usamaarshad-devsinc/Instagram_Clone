@@ -8,7 +8,7 @@
           <p>
             <p class="card-text">
               <% if account.profile_pic.attached? %>
-                <%= image_tag(account.profile_pic, width: 120, class:"rounded-circle border-top-0 ")  %>
+                <%= image_tag(account.profile_pic, width: 120, height: 120 , class:"rounded-circle border-top-0 cropped1")  %>
                 <%#= link_to 'Remove',to: @post.images[image].purge %>
               <% else %>
                 <%= image_tag('default.png', width: 120, class:"rounded-circle border-top-0 ")  %>
