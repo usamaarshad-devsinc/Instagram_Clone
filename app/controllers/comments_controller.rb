@@ -2,6 +2,8 @@
 
 class CommentsController < ApplicationController
   before_action :load_comment, only: %i[edit update destroy]
+  after_action :verify_authorized, only: %i[edit update destroy]
+
   def create
     post_id = params[:post_id]
     text = comments_params[:text]
@@ -36,5 +38,6 @@ class CommentsController < ApplicationController
 
   def load_comment
     @comment = Comment.find(params[:id])
+    authorize @comment
   end
 end

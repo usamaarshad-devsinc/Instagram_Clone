@@ -2,7 +2,12 @@
 
 class PostsController < ApplicationController
   before_action :load_post, only: %i[edit update destroy show]
-  before_action :load_account, only: %i[index homepage]
+  before_action :load_account, only: %i[index homepage] # rubocop:disable Rails/LexicallyScopedActionFilter
+  before_action :authorization, only: %i[edit update destroy]
+
+  after_action :verify_policy_scoped, only: :index
+  after_action :verify_authorized, only: %i[edit update destroy]
+
   def index
     load_posts_and_stories
     @requests = Request.where(recipient_id: @account.id, status: 'pending')
@@ -53,11 +58,12 @@ class PostsController < ApplicationController
   end
 
   def load_posts_and_stories
-    @posts = [].concat @account.posts
+    @posts = policy_scope(Post)
+    # @posts = [].concat @account.posts
     @stories = [].concat @account.stories
     requests = Request.where(sender: @account, status: 'accepted')
     requests.each do |req|
-      @posts.concat(req.recipient.posts)
+      # @posts.concat(req.recipient.posts)
       @stories.concat(req.recipient.stories)
     end
   end
@@ -68,5 +74,9 @@ class PostsController < ApplicationController
 
   def load_account
     @account = current_account
+  end
+
+  def authorization
+    authorize @post
   end
 end

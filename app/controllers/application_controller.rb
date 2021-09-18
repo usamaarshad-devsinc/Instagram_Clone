@@ -2,6 +2,8 @@
 
 class ApplicationController < ActionController::Base
   include Pundit
+  alias current_user current_account
+
   before_action :authenticate_account!
   before_action :configure_permitted_parameters, if: :devise_controller?
 

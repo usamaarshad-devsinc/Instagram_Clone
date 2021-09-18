@@ -13,7 +13,7 @@
       <strong><%= post.account.email %></strong>
     </div>
     <div >
-    <% if (current_account == post.account) %>
+    <% if policy(post).edit? %>
       <%= link_to 'Edit', edit_post_path(post) %> |
       <%= link_to 'Delete', post_path(post),
                 method: :delete,
