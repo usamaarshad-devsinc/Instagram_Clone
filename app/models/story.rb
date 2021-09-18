@@ -13,6 +13,6 @@ class Story < ApplicationRecord
   end
 
   def set_expiry
-    StoryExpiresJob.set(wait: 20.seconds).perform_later(id)
+    StoryExpiresJob.set(wait: 24.hours).perform_later(id)
   end
 end

@@ -2,12 +2,16 @@
 
 class StoriesController < ApplicationController
   before_action :load_story, only: %i[show destroy]
+  after_action :verify_policy_scoped, only: :index
+  after_action :verify_authorized, only: :destroy
+
   def index
-    @stories = [].concat current_account.stories
-    requests = current_account.requests_sent.where(status: 'accepted')
-    requests.each do |req|
-      @stories.concat(req.recipient.stories)
-    end
+    @stories = policy_scope(Story)
+    # @stories = [].concat current_account.stories
+    # requests = current_account.requests_sent.where(status: 'accepted')
+    # requests.each do |req|
+    #   @stories.concat(req.recipient.stories)
+    # end
   end
 
   def new
@@ -28,6 +32,7 @@ class StoriesController < ApplicationController
   def show; end
 
   def destroy
+    authorize @story
     redirect_to root_path, flash[notice: 'Story was successfuly deleted.'] if @story.destroy
   end
 

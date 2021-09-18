@@ -1,5 +1,5 @@
 <div class=" container-fluid " >
-  <% if (current_account == story.account) %>
+  <% if (policy(story).destroy?) %>
     <%#= link_to 'Edit', edit_story_path(story) %>
     <%= link_to 'Delete', story_path(story),
               method: :delete,
