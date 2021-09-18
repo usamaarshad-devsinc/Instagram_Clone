@@ -2,7 +2,7 @@
 
 module PublicHelper
   def search_friends(email)
-    Account.where('email LIKE ?', "%#{email}%").order(:email)
+    Account.where('email ILIKE :q OR username ILIKE :q OR full_name ILIKE :q', q: "%#{email}%").order(:email)
   end
 
   def followees_list(account)
