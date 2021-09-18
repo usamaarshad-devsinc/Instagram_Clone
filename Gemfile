@@ -12,8 +12,8 @@ gem 'rails', '~> 5.2.6'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Thinking Sphinx
-gem 'mysql2',          '~> 0.5.0', :platform => :ruby
-gem 'jdbc-mysql',      '= 5.1.35',  :platform => :jruby
+gem 'jdbc-mysql',      '= 5.1.35', platform: :jruby
+gem 'mysql2',          '~> 0.5.0', platform: :ruby
 gem 'thinking-sphinx', '~> 5.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
@@ -40,7 +40,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Pundit
-gem "pundit"
+gem 'pundit'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
