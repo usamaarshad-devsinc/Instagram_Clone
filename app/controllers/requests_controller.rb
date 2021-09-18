@@ -25,7 +25,9 @@ class RequestsController < ApplicationController
 
   # def toggle_privacy
   #   current_account.is_private = params[:commit] ? true : false
-  #   flash[:notice] = current_account.save ? 'Request was successfuly completed.' : current_account.errors.full_messages
+  #   flash[:notice] = current_account.save ?
+  # ' Request was successfuly completed.' :
+  #   current_account.errors.full_messages
   #   redirect_to root_path
   # end
 
