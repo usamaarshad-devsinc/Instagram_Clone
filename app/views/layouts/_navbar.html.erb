@@ -17,7 +17,7 @@
         </li>
       </ul>
       <div>
-        <%= form_with url: search_path, local: true, method: :get, class:"form-inline my-2 my-lg-0" do |form| %>
+        <%= form_with url: search_path, remote: true, method: :get, class:"form-inline my-2 my-lg-0" do |form| %>
           <%= form.text_field :username, class:"form-control mr-sm-2", placeholder:"Search", required: true  %>
           <%= form.submit 'Search', to: search_path , class:"btn btn-outline-success my-2 my-sm-0"  %>
         <% end %>

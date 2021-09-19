@@ -17,8 +17,12 @@ class PublicController < ApplicationController
   # end
 
   def search
-    @results = Account.search(params[:username], match_mode: :any)
-    # @results = search_friends(params[:username])
+    username = params[:username]
+    @results = Account.search(username, match_mode: :any)
+    # @results = search_friends(username)
+    # respond_to do
+    #   format.js
+    # end
   end
 
   def profile
