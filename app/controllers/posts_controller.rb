@@ -44,7 +44,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    redirect_to root_path, notice: 'Post was successfuly deleted.' if @post.destroy
+    return unless @post.destroy
+
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: 'Post was successfuly deleted.' }
+      format.js
+    end
   end
 
   def show
