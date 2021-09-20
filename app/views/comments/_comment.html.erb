@@ -3,7 +3,7 @@
     <p>
       <span class="" ><%= comment.text %></span>
       <strong><%= comment.account.email %></strong>
-      <% if (current_account == comment.account) || (current_account == @post.account) %>
+      <% if policy(comment).edit? || policy(@post).edit? %>
         <%= link_to 'Edit', edit_comment_path(comment) %>
         <%= link_to 'Delete', comment_path(comment),
                   method: :delete,

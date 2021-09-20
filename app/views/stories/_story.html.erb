@@ -1,5 +1,5 @@
 <div class=" container-fluid " >
-  <% if (current_account == story.account) %>
+  <% if (policy(story).destroy?) %>
     <%#= link_to 'Edit', edit_story_path(story) %>
     <%= link_to 'Delete', story_path(story),
               method: :delete,
@@ -11,7 +11,6 @@
       <%= image_tag(story.image, width: 300, class:'rounded' ) if story.image.attached? %>
     </p>
     <strong><%= story.description %></strong>
+    <p class="card-text caption"><%= time_ago_in_words(story.created_at) %></p>
   </div>
-
-
 </div>

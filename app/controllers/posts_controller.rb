@@ -1,21 +1,19 @@
+# frozen_string_literal: true
+
 class PostsController < ApplicationController
+  before_action :load_post, only: %i[edit update destroy show]
+  before_action :load_account, only: %i[index homepage] # rubocop:disable Rails/LexicallyScopedActionFilter
+  before_action :authorization, only: %i[edit update destroy]
+
+  after_action :verify_policy_scoped, only: :index
+  after_action :verify_authorized, only: %i[edit update destroy]
 
   def index
-    @user = current_account
-    puts "current user: #{@user.email}", @user.posts
-    @posts = [].concat @user.posts
-    @stories = [].concat @user.stories
-    requests = Request.where(sender: @user, status: 'accepted')
-    requests.each do |req|
-      puts req.recipient.posts
-      @posts.concat(req.recipient.posts)
-      @stories.concat(req.recipient.stories)
-    end
-    @requests = Request.where(recipient_id: current_account.id, status: 'pending')
+    load_posts_and_stories
+    @requests = Request.where(recipient_id: @account.id, status: 'pending')
   end
 
   def home_page
-    @account = current_account
     @account.followees
   end
 
@@ -24,47 +22,61 @@ class PostsController < ApplicationController
   end
 
   def create
-    # description = posts_params[:description]
     @post = current_account.posts.new(posts_params)
     if @post.save
       flash[:notice] = 'Post was successfuly created.'
       redirect_to @post
     else
-      flash[:notice] = @post.errors.messages[:base].to_s
+      flash[:notice] = @post.errors.messages[:base]
       redirect_to new_post_path(@post)
     end
   end
 
-  def edit
-    @post = Post.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @post = Post.find(params[:id])
     if @post.update!(posts_params)
-      redirect_to @post, notice: 'Post was successfuly updated.'
+      flash[:notice] = 'Post was successfuly updated.'
+      redirect_to @post
     else
       render 'edit'
     end
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    if @post.destroy
-      redirect_to root_path, notice: 'Post was successfuly deleted.'
-    end
+    redirect_to root_path, notice: 'Post was successfuly deleted.' if @post.destroy
   end
 
   def show
-    puts params
-    @post = Post.find(params[:id])
     @comments = @post.comments
   end
 
   private
 
   def posts_params
-    # puts params
     params.require(:post).permit(:description, images: [])
+  end
+
+  def load_posts_and_stories
+    @posts = policy_scope(Post)
+    # @posts = [].concat @account.posts
+    @stories = [].concat @account.stories
+    requests = Request.where(sender: @account, status: 'accepted')
+    requests.each do |req|
+      # @posts.concat(req.recipient.posts)
+      @stories.concat(req.recipient.stories)
+    end
+  end
+
+  def load_post
+    @post = Post.find(params[:id])
+  end
+
+  def load_account
+    @account = current_account
+  end
+
+  def authorization
+    authorize @post
   end
 end

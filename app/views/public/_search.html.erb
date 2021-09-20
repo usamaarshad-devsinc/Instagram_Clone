@@ -1,0 +1,11 @@
+<div class="card ">
+  <div class="overflow-auto">
+    <ul class="list-group">
+      <% if @results and (@results.size > 0) %>
+        <%= render @results %>
+      <% else %>
+        <p><strong>Search Friends</strong></p>
+      <% end %>
+    </ul>
+  </div>
+</div>

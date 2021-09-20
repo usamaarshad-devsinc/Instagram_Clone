@@ -7,12 +7,13 @@
     <p class="card-text">
       <% if @post.images.attached? %>
         <% (0...@post.images.count).each do |image|%>
+          <%#= link_to 'Remove', onclick: @post.images[image].purge %>
           <%= image_tag(@post.images[image], width: 500 )%>
-          <%#= link_to 'Remove',to: @post.images[image].purge %>
+          <%= link_to 'Remove',to: @post.images[image].purge %>
         <% end %>
       <% end %>
     </p>
-    <p class="card-text d-inline-block">
+    <p class="card-text" style="padding-left:7rem;">
     <%= form.file_field :images, multiple: :true, required: true %>
     </p>
   </p>

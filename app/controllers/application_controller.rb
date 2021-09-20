@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
+  include Pundit
+  alias current_user current_account
+
   before_action :authenticate_account!
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -12,7 +17,8 @@ class ApplicationController < ActionController::Base
       user_params.permit(:profile_pic, :email, :full_name, :username, :password, :password_confirmation, :is_private)
     end
     devise_parameter_sanitizer.permit(:account_update) do |user_params|
-      user_params.permit(:profile_pic, :email, :full_name, :username,:current_password, :password, :password_confirmation, :is_private)
+      user_params.permit(:profile_pic, :email, :full_name, :username, :current_password, :password,
+                         :password_confirmation, :is_private)
     end
   end
 end

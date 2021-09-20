@@ -4,7 +4,7 @@
     <div class="d-flex">
       <div>
         <% if post.account.profile_pic.attached? %>
-          <%= image_tag(post.account.profile_pic, width: 20,class:"rounded-circle border-top-0 ")  %>
+          <%= image_tag(post.account.profile_pic, width: 20, height: 20,class:"rounded-circle border-top-0 cropped1")  %>
           <%#= link_to 'Remove',to: @post.images[image].purge %>
         <% else %>
           <%= image_tag('default.png', width: 20,class:"rounded-circle border-top-0 ")  %>
@@ -13,7 +13,7 @@
       <strong><%= post.account.email %></strong>
     </div>
     <div >
-    <% if (current_account == post.account) %>
+    <% if policy(post).edit? %>
       <%= link_to 'Edit', edit_post_path(post) %> |
       <%= link_to 'Delete', post_path(post),
                 method: :delete,

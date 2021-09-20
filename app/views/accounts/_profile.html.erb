@@ -8,10 +8,10 @@
           <p>
             <p class="card-text">
               <% if account.profile_pic.attached? %>
-                <%= image_tag(account.profile_pic, width: 120,class:"rounded-circle border-top-0 ")  %>
+                <%= image_tag(account.profile_pic, width: 120, height: 120 , class:"rounded-circle border-top-0 cropped1")  %>
                 <%#= link_to 'Remove',to: @post.images[image].purge %>
               <% else %>
-                <%= image_tag('default.png', width: 120,class:"rounded-circle border-top-0 ")  %>
+                <%= image_tag('default.png', width: 120, class:"rounded-circle border-top-0 ")  %>
               <% end %>
             </p>
           </p>
@@ -26,7 +26,7 @@
           <% if account.id == current_account.id %>
             <%= link_to 'Edit Profile', edit_account_registration_path %>
           <% end %>
-          <%= form_with model: Request, local:true do |form| %>
+          <%= form_with model: Request, remote:true do |form| %>
             <%= hidden_field_tag(:recipient_id, account.id) %>
             <% if account.id != current_account.id %>
               <% @value = already_followed?( account.id, current_account.id) ? 'Unfollow' : 'Follow' %>
