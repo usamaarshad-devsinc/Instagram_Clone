@@ -1,4 +1,4 @@
-
+$(".comment_text_<%= @post.id %>").val('')
 if ( $(".comments_div_<%= @post.id %>").length )
 {
   $(".comments_div_<%= @post.id %>").append("<%= j render @comment %>")
