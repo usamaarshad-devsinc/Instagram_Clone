@@ -16,12 +16,16 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user_is_owner_of_record?
+    user_is_owner_of_record? || user_is_owner_of_post?
   end
 
   private
 
   def user_is_owner_of_record?
     account == record.account
+  end
+
+  def user_is_owner_of_post?
+    account == record.post.account
   end
 end

@@ -3,8 +3,10 @@
     <p>
       <span class="" ><%= comment.text %></span>
       <strong><%= comment.account.email %></strong>
+      <% if policy(comment).edit? %>
+        <%= link_to 'Edit', edit_comment_path(comment) %> |
+      <% end %>
       <% if policy(comment).edit? || policy(@post).edit? %>
-        <%= link_to 'Edit', edit_comment_path(comment) %>
         <%= link_to 'Delete', comment_path(comment),
                   method: :delete,
                   data: { confirm: 'Are you sure?' }, remote: true %>
