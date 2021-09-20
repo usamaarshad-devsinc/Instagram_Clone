@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: devsinc-rails-test-project
+  api_key: '117893415883211'
+  api_secret: 6rPw4ucJqjRnl0UpMFd8C1DJy-c
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: devsinc-rails-test-project
+  api_key: '117893415883211'
+  api_secret: 6rPw4ucJqjRnl0UpMFd8C1DJy-c
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: devsinc-rails-test-project
+  api_key: '117893415883211'
+  api_secret: 6rPw4ucJqjRnl0UpMFd8C1DJy-c
+  enhance_image_tag: true
+  static_file_support: false

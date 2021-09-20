@@ -55,7 +55,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # Active Storage for file uploading
 gem 'activestorage-cloudinary-service'
-gem 'cloudinary', require: false
+gem 'cloudinary'
 gem "shrine-cloudinary", "~> 1.1"
 gem 'image_processing', '~> 1.2'
 gem 'shrine', '~> 3.3'

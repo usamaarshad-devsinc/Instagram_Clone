@@ -63,9 +63,9 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   # Store files locally.
-  config.active_storage.service = :local
+  # config.active_storage.service = :local
 
-  # config.active_storage.service = :cloudinary
+  config.active_storage.service = :cloudinary
 
   # Mailer Configurations for Gmail
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
