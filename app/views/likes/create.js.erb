@@ -1,0 +1,1 @@
+$(".like_button_<%= @post.id %>").replaceWith('<input type="submit" name="commit" value="Like (<%= j @likes.to_s %>) " to="like" class="btn btn-primary like_button" data-disable-with="Like (<%= j @likes.to_s %>) ">')
