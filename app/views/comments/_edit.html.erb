@@ -1,0 +1,7 @@
+
+<%= form_with model: @comment, remote: true do |form|%>
+  <p>
+    <%= form.text_field :text, required: true %>
+    <%= form.submit "Post Comment" , to: :comment, class: "btn btn-primary" %>
+  </p>
+<% end %>
