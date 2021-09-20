@@ -1,1 +1,6 @@
-$(".like_button_<%= @post.id %>").replaceWith('<input type="submit" name="commit" value="Like (<%= j @likes.to_s %>) " to="like" class="btn btn-primary like_button_<%= @post.id %>" data-disable-with="Like (<%= j @likes.to_s %>) ">')
+$(".div_like_button_<%= @post.id %>").empty().append(
+  '<%= j link_to "Unlike (#{@likes.to_s}) ", like_path(@post.id),
+                      method: :delete,
+                      remote: true,
+                      class: "btn btn-primary like_button_#{@post.id}" %>')
+$("#notice").text('Post was successfully Liked.')

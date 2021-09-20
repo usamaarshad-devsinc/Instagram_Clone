@@ -17,14 +17,16 @@ class LikesController < ApplicationController
 
   def destroy
     flash[:notice] = 'Successfully unliked.'
-    Like.where(account_id: current_account.id, post_id: params[:post_id]).first.destroy
+    Like.where(account_id: current_account.id, post_id: params[:id]).first.destroy
+    @post = Post.find(params[:id])
+    @likes = Like.where(post_id: params[:id]).count
   end
-
-  private
 
   def already_liked?
     Like.exists?(account_id: current_account.id, post_id: params[:post_id])
   end
+
+  private
 
   def like_it
     post_id = params[:post_id]
