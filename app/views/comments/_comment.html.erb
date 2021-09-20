@@ -1,5 +1,5 @@
 <% if comment.id %>
-  <li class="list-group-item container-fluid">
+  <li class="list-group-item container-fluid comment_<%= comment.id %>">
     <p>
       <span class="" ><%= comment.text %></span>
       <strong><%= comment.account.email %></strong>

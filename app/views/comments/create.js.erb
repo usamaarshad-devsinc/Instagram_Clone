@@ -1,0 +1,10 @@
+
+if ( $(".comments_div_<%= @post.id %>").length )
+{
+  $(".comments_div_<%= @post.id %>").append("<%= j render @comment %>")
+}
+else
+{
+  $(".post_div_<%= @post.id %>").append("<%= j render @comment %>")
+}
+

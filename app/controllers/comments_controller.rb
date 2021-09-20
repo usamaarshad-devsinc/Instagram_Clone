@@ -5,14 +5,18 @@ class CommentsController < ApplicationController
   after_action :verify_authorized, only: %i[edit update destroy]
 
   def create
-    post_id = params[:post_id]
+    @post = Post.find(params[:post_id])
     text = comments_params[:text]
-    @comment = Comment.new(text: text, post_id: post_id)
-    @comment.account = current_account
-    if @comment.save
-      redirect_to post_path(@comment.post), notice: 'Comment was successfuly posted.'
-    else
-      redirect_to post_path(@comment.post), notice: 'Some errors occur in commenting this post.'
+    @comment = Comment.new(text: text, post_id: @post.id, account_id: current_account.id)
+    # @comment.account = current_account
+    flash[:notice] = if @comment.save
+                       'Comment was successfuly posted.'
+                     else
+                       'Some errors occur in commenting this post.'
+                     end
+    respond_to do |format|
+      format.html { redirect_to post_path(@comment.post) }
+      format.js
     end
   end
 
@@ -27,7 +31,11 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    redirect_to post_path(@comment.post), notice: 'Comment was successfuly deleted.' if @comment.destroy
+    flash[:notice] = @comment.destroy ? 'Comment was successfuly deleted.' : @comment.errors.full_messages
+    respond_to do |format|
+      format.html { redirect_to post_path(@comment.post) }
+      format.js
+    end
   end
 
   private
