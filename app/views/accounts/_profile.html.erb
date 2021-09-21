@@ -26,7 +26,7 @@
           <% if account.id == current_account.id %>
             <%= link_to 'Edit Profile', edit_account_registration_path %>
           <% elsif already_followed?( account.id, current_account.id) %>
-            <%= render 'accounts/unfollow_form', account: account %>
+            <%= render 'accounts/unfollow_form', account: account, request: find_request(account) %>
           <% else %>
             <%= render 'accounts/follow_form', account: account %>
           <% end %>
