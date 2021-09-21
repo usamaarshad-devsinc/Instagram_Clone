@@ -2,13 +2,9 @@
 
 class LikesController < ApplicationController
   def create
-    if already_liked?
-      unlike_it
-    else
-      like_it
-    end
-    @likes = Like.where(post_id: params[:post_id]).count
-    @post = Post.find(params[:post_id])
+    like_it
+    @likes = Like.total_likes_on_post(params[:post_id])
+    @post = Post.find_by(params[:post_id])
     respond_to do |format|
       format.html { redirect_to root_path }
       format.js
@@ -19,7 +15,7 @@ class LikesController < ApplicationController
     flash[:notice] = 'Successfully unliked.'
     Like.where(account_id: current_account.id, post_id: params[:id]).first.destroy
     @post = Post.find(params[:id])
-    @likes = Like.where(post_id: params[:id]).count
+    @likes = Like.total_likes_on_post(params[:id])
   end
 
   def already_liked?
@@ -36,9 +32,5 @@ class LikesController < ApplicationController
                      else
                        'Some errors occur in liking this post.'
                      end
-  end
-
-  def unlike_it
-    destroy
   end
 end

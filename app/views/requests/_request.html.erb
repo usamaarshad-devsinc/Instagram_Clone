@@ -3,10 +3,10 @@
         <p>
           <p class="card-text">
             <% if request.sender.profile_pic.attached? %>
-              <%= image_tag(request.sender.profile_pic, width: 70,class:"rounded-circle border-top-0 ")  %>
+              <%= image_tag(request.sender.profile_pic, height: 70, width: 70, class:"rounded-circle border-top-0 cropped1")  %>
               <%#= link_to 'Remove',to: @post.images[image].purge %>
             <% else %>
-              <%= image_tag('default.png', width: 70,class:"rounded-circle border-top-0 ")  %>
+              <%= image_tag('default.png', width: 70,class:"rounded-circle border-top-0 cropped1")  %>
             <% end %>
           </p>
         </p>

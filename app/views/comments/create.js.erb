@@ -1,10 +1,10 @@
-$(".comment_text_<%= @post.id %>").val('')
-if ( $(".comments_div_<%= @post.id %>").length )
+$(".comment_text_<%= @comment.post.id %>").val('')
+if ( $(".comments_div_<%= @comment.post.id %>").length )
 {
-  $(".comments_div_<%= @post.id %>").append("<%= j render @comment %>")
+  $(".comments_div_<%= @comment.post.id %>").append("<%= j render @comment %>")
 }
 else
 {
-  $(".post_div_<%= @post.id %>").append("<%= j render @comment %>")
+  $(".post_div_<%= @comment.post.id %>").append("<%= j render @comment %>")
 }
 $("#notice").text('Comment was successfully created.')

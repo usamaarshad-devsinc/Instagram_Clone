@@ -7,11 +7,6 @@ class StoriesController < ApplicationController
 
   def index
     @stories = policy_scope(Story)
-    # @stories = [].concat current_account.stories
-    # requests = current_account.requests_sent.where(status: 'accepted')
-    # requests.each do |req|
-    #   @stories.concat(req.recipient.stories)
-    # end
   end
 
   def new

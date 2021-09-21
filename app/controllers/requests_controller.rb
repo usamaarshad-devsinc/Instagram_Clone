@@ -23,18 +23,10 @@ class RequestsController < ApplicationController
     redirect_to root_path
   end
 
-  # def toggle_privacy
-  #   current_account.is_private = params[:commit] ? true : false
-  #   flash[:notice] = current_account.save ?
-  # ' Request was successfuly completed.' :
-  #   current_account.errors.full_messages
-  #   redirect_to root_path
-  # end
-
   private
 
   def delete_request(recipient_id)
-    Request.where(recipient_id: recipient_id, sender_id: current_account.id).first.destroy
+    Request.find_by(recipient_id: recipient_id, sender_id: current_account.id).destroy
   end
 
   def load_request
@@ -47,7 +39,7 @@ class RequestsController < ApplicationController
 
   def generate_request(recipient_id)
     request = Request.new(recipient_id: recipient_id, sender_id: current_account.id)
-    recipient = Account.find(recipient_id)
+    recipient = Account.find_by(id: recipient_id)
     request.status = recipient.is_private ? 'pending' : 'accepted'
     flash[:notice] = request.save ? 'Request sent!' : request.errors.full_messages
   end

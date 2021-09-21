@@ -10,7 +10,7 @@ class PostsController < ApplicationController
 
   def index
     load_posts_and_stories
-    @requests = Request.where(recipient_id: @account.id, status: 'pending')
+    @requests = Request.pending_requests_recieved(@account)
   end
 
   def home_page
@@ -19,6 +19,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    flash[:notice] = ''
   end
 
   def create
@@ -64,11 +65,9 @@ class PostsController < ApplicationController
 
   def load_posts_and_stories
     @posts = policy_scope(Post)
-    # @posts = [].concat @account.posts
     @stories = [].concat @account.stories
     requests = Request.where(sender: @account, status: 'accepted')
     requests.each do |req|
-      # @posts.concat(req.recipient.posts)
       @stories.concat(req.recipient.stories)
     end
   end
