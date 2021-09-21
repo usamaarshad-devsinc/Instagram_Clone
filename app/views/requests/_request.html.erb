@@ -1,4 +1,4 @@
-<div class="card" >
+<div class="card request_card_<%= request.id %>" >
   <div class="card-body">
         <p>
           <p class="card-text">
@@ -13,9 +13,9 @@
     <h5 class="card-title"><%= request.sender.username %></h5>
     <h6 class="card-subtitle mb-2 text-muted"><%= request.sender.email %></h6>
     <p class="card-text"><%= time_ago_in_words(request.created_at) %></p>
-    <%= link_to 'Accept', request_path(request) , method: :put, class:"card-link" %> |
+    <%= link_to 'Accept', request_path(request) , method: :put, class:"card-link", remote: true %> |
     <%= link_to 'Reject', request_path(request),
                 method: :delete,
-                data: { confirm: 'Are you sure?' }, class:"card-link" %>
+                class:"card-link", remote: true %>
   </div>
 </div>

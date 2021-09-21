@@ -1,0 +1,9 @@
+if ( $(".request_card_<%= @request.id %>").length )
+{
+  $(".request_card_<%= @request.id %>").remove()
+}
+else
+{
+  $(".follow_<%= @request.recipient_id %>").replaceWith('<%= j render 'accounts/follow_form', account: @request.recipient %>')
+  $("#notice").text('Successfully Unfollowed.')
+}
