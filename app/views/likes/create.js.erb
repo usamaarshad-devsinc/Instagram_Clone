@@ -1,0 +1,6 @@
+$(".div_like_button_<%= @post.id %>").empty().append(
+  '<%= j link_to "Unlike (#{@likes.to_s}) ", like_path(@post.id),
+                      method: :delete,
+                      remote: true,
+                      class: "btn btn-primary like_button_#{@post.id}" %>')
+$("#notice").text('Post was successfully Liked.')

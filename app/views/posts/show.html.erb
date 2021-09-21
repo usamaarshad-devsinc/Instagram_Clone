@@ -2,7 +2,7 @@
   <div><h1>Post</h1></div>
   <div>
     <%= render partial: 'post', locals: {post: @post} %>
-    <ul class="list-group d-table-caption">
+    <ul class="list-group d-table-caption comments_div_<%= @post.id %>">
       <%= render @post.comments %>
     </ul>
   </div>

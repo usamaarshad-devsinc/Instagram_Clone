@@ -1,0 +1,3 @@
+<%= form_with( model: [ post, post.likes.build ], remote: true) do |form|%>
+  <%= form.submit "Like (#{total_likes}) " , to: :like, class: "btn btn-primary like_button_#{post.id}" %>
+<% end %>

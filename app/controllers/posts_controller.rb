@@ -2,7 +2,7 @@
 
 class PostsController < ApplicationController
   before_action :load_post, only: %i[edit update destroy show]
-  before_action :load_account, only: %i[index homepage] # rubocop:disable Rails/LexicallyScopedActionFilter
+  before_action :load_account, only: %i[index home_page]
   before_action :authorization, only: %i[edit update destroy]
 
   after_action :verify_policy_scoped, only: :index
@@ -44,7 +44,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    redirect_to root_path, notice: 'Post was successfuly deleted.' if @post.destroy
+    return unless @post.destroy
+
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: 'Post was successfuly deleted.' }
+      format.js
+    end
   end
 
   def show

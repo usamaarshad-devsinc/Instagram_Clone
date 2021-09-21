@@ -1,7 +1,7 @@
 <%= form_with(model: [post, post.comments.build], remote: true) do |form|%>
   <p>
     <%#= hidden_field_tag(:post_id, post.id) %>
-    <%= form.text_field :text, required: true %>
+    <%= form.text_field :text, required: true, class:"comment_text_#{ post.id}" %>
     <%= form.submit "Post Comment" , class: "btn btn-primary" %>
   </p>
 <% end %>
