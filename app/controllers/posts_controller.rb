@@ -2,7 +2,7 @@
 
 class PostsController < ApplicationController
   before_action :load_post, only: %i[edit update destroy show]
-  before_action :load_account, only: %i[index homepage] # rubocop:disable Rails/LexicallyScopedActionFilter
+  before_action :load_account, only: %i[index home_page]
   before_action :authorization, only: %i[edit update destroy]
 
   after_action :verify_policy_scoped, only: :index

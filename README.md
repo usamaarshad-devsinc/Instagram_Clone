@@ -5,7 +5,7 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version (2.7)
 
 * System dependencies
 
@@ -22,6 +22,9 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
-# Instagram_Clone
-# Instagram_Clone
-# Instagram_Clone
+# How to Run Instagram_Clone
+* To install dependencies mentioned in Gemfile
+  Command: bundle install
+* To setup database (create, load schema, populate with initial test data)
+  Command: rails db:setup
+*

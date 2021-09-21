@@ -14,7 +14,7 @@
       <% end %>
     </p>
     <p class="card-text" style="padding-left:7rem;">
-    <%= form.file_field :images, multiple: :true, required: true %>
+    <%= form.file_field :images, multiple: :true, max: 10 , required: true %>
     </p>
   </p>
   <p>
