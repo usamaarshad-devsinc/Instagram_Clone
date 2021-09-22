@@ -3,7 +3,7 @@
 class StoryPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.stories_to_show(account)
+      scope.records_to_show(account)
     end
   end
 

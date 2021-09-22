@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
+  include FollowedAccounts
+
   belongs_to :account
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many_attached :images, dependent: :destroy
   validate :restrict_number_of_images
 
-  scope :posts_to_show, ->(account) { where(account_id: followed_accounts(account)).order(updated_at: :desc) }
+  # scope :posts_to_show, ->(account) { where(account_id: followed_accounts(account)).order(updated_at: :desc) }
 
-  def self.followed_accounts(account)
-    ids = account.requests_sent.accepted_sent_requests.pluck(:recipient_id)
-    ids << account.id
-  end
+  # def self.followed_accounts(account)
+  #   ids = account.requests_sent.accepted_sent_requests.pluck(:recipient_id)
+  #   ids << account.id
+  # end
 
   private
 
