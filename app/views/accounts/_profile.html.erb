@@ -36,20 +36,20 @@
       <div class="card col-4" >
         <div class="card-header">
           <% @list = followers_list(account) %>
-          <h5 class="title"><strong>Followers (<%= @list.size %>) <strong></h5>
+          <h5 class="title followers_count"><strong>Followers (<%= @list.size %>) <strong></h5>
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush followers_list">
           <% @list.each do |acc|%>
-            <li class="list-group-item"><%= link_to acc.email, profile_path(account: acc) %></li>
+            <li class="list-group-item follower_<%= acc.id %>"><%= link_to acc.email, profile_path(account: acc) %></li>
           <% end %>
         </ul>
         <div class="card-header">
           <% @list = followees_list(account) %>
-          <h5 class="title"><strong>Following (<%= @list.size %>) <strong></h5>
+          <h5 class="title followees_count"><strong>Following (<%= @list.size %>) <strong></h5>
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush followees_list">
           <% @list.each do |acc|%>
-            <li class="list-group-item"><%= link_to "#{acc.email}", profile_path(account: acc) %></li>
+            <li class="list-group-item followee_<%= acc.id %>"><%= link_to "#{acc.email}", profile_path(account: acc) %></li>
           <% end %>
         </ul>
       </div>

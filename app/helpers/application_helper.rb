@@ -8,4 +8,12 @@ module ApplicationHelper
   def find_request(recipient)
     current_account.requests_sent.find_by(recipient_id: recipient.id)
   end
+
+  def followees_count(account_id)
+    Request.where(sender_id: account_id, status: 'accepted').count
+  end
+
+  def followers_count(account_id)
+    Request.where(recipient_id: account_id, status: 'accepted').count
+  end
 end
