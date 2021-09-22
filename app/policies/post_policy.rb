@@ -3,14 +3,7 @@
 class PostPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(account_id: followed_accounts).order(updated_at: :desc)
-    end
-
-    private
-
-    def followed_accounts
-      ids = account.requests_sent.accepted_sent_requests.pluck(:recipient_id)
-      ids << account.id
+      scope.records_to_show(account)
     end
   end
 

@@ -8,4 +8,5 @@ class Request < ApplicationRecord
 
   # enum status: { accepted: 0, pending: 1 }
   scope :accepted_sent_requests, -> { where(status: 'accepted') }
+  scope :pending_requests_recieved, ->(account) { where(recipient_id: account.id, status: 'pending') }
 end

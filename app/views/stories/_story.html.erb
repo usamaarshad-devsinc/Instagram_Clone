@@ -1,9 +1,9 @@
-<div class=" container-fluid " >
+<div class=" container-fluid story_<%= story.id %>" >
   <% if (policy(story).destroy?) %>
     <%#= link_to 'Edit', edit_story_path(story) %>
     <%= link_to 'Delete', story_path(story),
               method: :delete,
-              data: { confirm: 'Are you sure?' } %>
+              data: { confirm: 'Are you sure?' }, remote: true %>
   <% end %>
   <div class="card-body">
     <strong><%= story.account.email %></strong>

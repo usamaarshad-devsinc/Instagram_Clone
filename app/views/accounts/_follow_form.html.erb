@@ -1,0 +1,6 @@
+<div class="follow_<%= account.id %>" >
+  <%= form_with model: Request, remote:true do |form| %>
+    <%= hidden_field_tag(:recipient_id, account.id) %>
+    <%= form.submit "Follow", to: :request, class:"card-link" %>
+  <% end %>
+</div>

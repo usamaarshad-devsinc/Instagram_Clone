@@ -5,9 +5,7 @@ class CommentsController < ApplicationController
   after_action :verify_authorized, only: %i[edit update destroy]
 
   def create
-    @post = Post.find_by(id: params[:post_id])
-    text = comments_params[:text]
-    @comment = Comment.new(text: text, post_id: @post.id, account_id: current_account.id)
+    @comment = Comment.new(text: comments_params[:text], post_id: params[:post_id], account_id: current_account.id)
     flash[:notice] = if @comment.save
                        'Comment was successfuly posted.'
                      else

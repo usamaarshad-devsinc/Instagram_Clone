@@ -7,11 +7,6 @@ class StoriesController < ApplicationController
 
   def index
     @stories = policy_scope(Story)
-    # @stories = [].concat current_account.stories
-    # requests = current_account.requests_sent.where(status: 'accepted')
-    # requests.each do |req|
-    #   @stories.concat(req.recipient.stories)
-    # end
   end
 
   def new
@@ -33,7 +28,12 @@ class StoriesController < ApplicationController
 
   def destroy
     authorize @story
-    redirect_to root_path, flash[notice: 'Story was successfuly deleted.'] if @story.destroy
+    return unless @story.destroy
+
+    respond_to do |format|
+      format.html { redirect_to root_path, flash[notice: 'Story was successfuly deleted.'] }
+      format.js
+    end
   end
 
   private

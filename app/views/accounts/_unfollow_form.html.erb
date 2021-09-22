@@ -1,0 +1,6 @@
+<div class="follow_<%= account.id %>" >
+  <%= link_to "Unfollow", request_path(request),
+                        method: :delete,
+                        remote: true,
+                        class: "btn btn-primary " %>
+</div>

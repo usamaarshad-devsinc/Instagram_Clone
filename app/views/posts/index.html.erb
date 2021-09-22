@@ -22,16 +22,18 @@
       </div>
     </div>
   </div>
-  <% if @requests.size > 0 %>
-    <div class="card col-2" >
-      <div class="card-header">
-        Requests
+  <% if current_account.is_private %>
+    <% if @requests.size > 0 %>
+      <div class="card col-2 requests_col" >
+        <div class="card-header">
+          Requests
+        </div>
+        <div class="overflow-auto">
+          <ul class="list-group">
+            <%= render @requests %>
+          </ul>
+        </div>
       </div>
-      <div class="overflow-auto">
-        <ul class="list-group">
-          <%= render @requests %>
-        </ul>
-      </div>
-    </div>
+    <% end %>
   <% end %>
 </div>

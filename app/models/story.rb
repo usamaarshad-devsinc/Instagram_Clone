@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Story < ApplicationRecord
+  include FollowedAccounts
+
   has_one_attached :image
   belongs_to :account
   validate :presence_check
