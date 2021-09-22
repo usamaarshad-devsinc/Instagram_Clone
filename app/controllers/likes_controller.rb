@@ -13,7 +13,7 @@ class LikesController < ApplicationController
 
   def destroy
     flash[:notice] = 'Successfully unliked.'
-    Like.where(account_id: current_account.id, post_id: params[:id]).first.destroy
+    Like.find_by(account_id: current_account.id, post_id: params[:id]).destroy
     @post = Post.find_by(id: params[:id])
     @likes = Like.total_likes_on_post(params[:id])
   end

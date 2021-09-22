@@ -2,9 +2,9 @@
 
 class DropTables < ActiveRecord::Migration[5.2]
   def change
-    drop_table :posts
-    drop_table :stories
-    drop_table :likes
-    drop_table :comments
+    drop_table :posts do end
+    drop_table :stories do end
+    drop_table :likes do end
+    drop_table :comments do end
   end
 end

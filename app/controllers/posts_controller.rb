@@ -73,7 +73,7 @@ class PostsController < ApplicationController
   end
 
   def load_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by(id: params[:id])
   end
 
   def load_account

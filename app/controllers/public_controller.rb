@@ -10,7 +10,7 @@ class PublicController < ApplicationController
   end
 
   def profile
-    @account = Account.find(params[:account])
+    @account = Account.find_by(id: params[:account])
   end
 
   private
