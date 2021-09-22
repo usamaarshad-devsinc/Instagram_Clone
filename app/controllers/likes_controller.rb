@@ -4,7 +4,7 @@ class LikesController < ApplicationController
   def create
     like_it
     @likes = Like.total_likes_on_post(params[:post_id])
-    @post = Post.find_by(params[:post_id])
+    @post = Post.find_by(id: params[:post_id])
     respond_to do |format|
       format.html { redirect_to root_path }
       format.js
@@ -14,7 +14,7 @@ class LikesController < ApplicationController
   def destroy
     flash[:notice] = 'Successfully unliked.'
     Like.where(account_id: current_account.id, post_id: params[:id]).first.destroy
-    @post = Post.find(params[:id])
+    @post = Post.find_by(id: params[:id])
     @likes = Like.total_likes_on_post(params[:id])
   end
 
