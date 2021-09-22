@@ -20,9 +20,7 @@ module Accounts
     # PUT /resource
     def update
       # super
-      Rails.logger.debug '...................................................Update Called'
       account_params = params.require(:account).permit(:full_name, :username, :profile_pic, :is_private)
-      Rails.logger.debug account_params
       current_account.update!(account_params)
     end
 
