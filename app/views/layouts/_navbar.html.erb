@@ -33,7 +33,7 @@
                 </p>
                 <p class="card-text ">
                   <% if current_account.profile_pic.attached? %>
-                    <%= image_tag(current_account.profile_pic, width: 30, height: 30,class:"rounded-circle border-top-0 cropped1")  %>
+                    <%= image_tag(current_account.profile_pic, type: 'fetch', width: 30, height: 30,class:"rounded-circle border-top-0 cropped1")  %>
                     <%#= link_to 'Remove',to: @post.images[image].purge %>
                   <% else %>
                     <%= image_tag('default.png', width: 30,class:"rounded-circle border-top-0 ")  %>

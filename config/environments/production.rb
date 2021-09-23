@@ -29,12 +29,14 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
+
+  config.serve_static_files = true
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
@@ -50,7 +52,7 @@ Rails.application.configure do
   config.active_storage.service = :cloudinary
 
   # Mailer Configurations for Gmail
-  config.action_mailer.default_url_options = { host: 'https://instagram-clone-devsinc.herokuapp.com/', port: -5000 }
+  config.action_mailer.default_url_options = { host: 'http://obscure-lake-35756.herokuapp.com/'}
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

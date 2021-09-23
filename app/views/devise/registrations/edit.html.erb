@@ -8,7 +8,7 @@
         <%= f.label :profile_pic %><br>
         <p class="card-text">
           <% if current_account.profile_pic.attached? %>
-            <%= image_tag(current_account.profile_pic, width: 300,class:"rounded border-top-0 ")  %>
+            <%= image_tag(current_account.profile_pic, type: 'fetch', width: 300,class:"rounded border-top-0 ")  %>
           <% else %>
             <%= image_tag('default.png', width: 300,class:"rounded border-top-0 ")  %>
           <% end %>
