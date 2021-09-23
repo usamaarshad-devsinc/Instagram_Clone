@@ -52,9 +52,9 @@ Rails.application.configure do
   config.active_storage.service = :cloudinary
 
   # Mailer Configurations for Gmail
-  config.action_mailer.default_url_options = { host: 'obscure-lake-35756.herokuapp.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'obscure-lake-35756.herokuapp.com', protocol: 'http' }
   # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  config.action_mailer.perform_deliveries = true
+  # config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
