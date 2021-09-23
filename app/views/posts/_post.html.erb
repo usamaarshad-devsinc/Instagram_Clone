@@ -25,7 +25,7 @@
     <p class="card-text">
       <% if post.images.attached? %>
         <% (0...post.images.count).each do |image|%>
-          <%= cl_image_tag(post.images[image].key, width: 500, class:' rounded' )%>
+          <%= cl_image_tag(post.images[image].key, height: 400, width: 500, class:' rounded cropped1' )%>
         <% end %>
       <% end %>
     </p>

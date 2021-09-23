@@ -8,7 +8,7 @@
   <div class="card-body">
     <strong><%= story.account.email %></strong>
     <p class="card-text">
-      <%= cl_image_tag(story.image.key, width: 300, class:'rounded' ) if story.image.attached? %>
+      <%= cl_image_tag(story.image.key, height: 300, width: 300, class:'rounded cropped1' ) if story.image.attached? %>
     </p>
     <strong><%= story.description %></strong>
     <p class="card-text caption"><%= time_ago_in_words(story.created_at) %></p>
