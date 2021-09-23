@@ -25,7 +25,7 @@
     <p class="card-text">
       <% if post.images.attached? %>
         <% (0...post.images.count).each do |image|%>
-          <%= image_tag(post.images[image], width: 500, class:' rounded' )%>
+          <%= cl_image_tag(post.images[image].key, width: 500, class:' rounded', cloud_name: 'devsinc-rails-test-project' )%>
         <% end %>
       <% end %>
     </p>
