@@ -4,7 +4,7 @@
     <%= form.label :image %><br>
     <p class="card-text">
       <% if @story.image.attached? %>
-        <%= image_tag(@story.image, width: 500, cloud_name: 'devsinc-rails-test-project' )%>
+        <%= cl_image_tag(@story.image.key, width: 500)%>
         <%#= link_to 'Remove',to: @story.image.purge %>
       <% end %>
     </p>
