@@ -8,7 +8,7 @@
       <% if @post.images.attached? %>
         <% (0...@post.images.count).each do |image|%>
           <%#= link_to 'Remove', onclick: @post.images[image].purge %>
-          <%= image_tag(@post.images[image], type: 'fetch', width: 500 )%>
+          <%= image_tag(@post.images[image], width: 500, cloud_name: 'devsinc-rails-test-project' )%>
           <%= link_to 'Remove',to: @post.images[image].purge %>
         <% end %>
       <% end %>

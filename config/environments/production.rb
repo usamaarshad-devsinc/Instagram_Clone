@@ -25,7 +25,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   if ENV['RAILS_LOG_TO_STDOUT'].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
@@ -52,7 +52,7 @@ Rails.application.configure do
   config.active_storage.service = :cloudinary
 
   # Mailer Configurations for Gmail
-  config.action_mailer.default_url_options = { host: 'http://obscure-lake-35756.herokuapp.com/'}
+  config.action_mailer.default_url_options = { host: 'http://obscure-lake-35756.herokuapp.com/' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

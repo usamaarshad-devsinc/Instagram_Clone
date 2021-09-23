@@ -58,9 +58,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Active Storage for file uploading
 gem 'activestorage-cloudinary-service'
 gem 'cloudinary'
-gem "shrine-cloudinary", "~> 1.1"
 gem 'image_processing', '~> 1.2'
 gem 'shrine', '~> 3.3'
+gem 'shrine-cloudinary', '~> 1.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

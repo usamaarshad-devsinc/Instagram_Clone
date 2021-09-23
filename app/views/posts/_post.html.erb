@@ -4,7 +4,7 @@
     <div class="d-flex">
       <div>
         <% if post.account.profile_pic.attached? %>
-          <%= image_tag(post.account.profile_pic, type: 'fetch', width: 20, height: 20,class:"rounded-circle border-top-0 cropped1")  %>
+          <%= image_tag(post.account.profile_pic, width: 20, height: 20,class:"rounded-circle border-top-0 cropped1", cloud_name: 'devsinc-rails-test-project')  %>
           <%#= link_to 'Remove',to: @post.images[image].purge %>
         <% else %>
           <%= image_tag('default.png', width: 20,class:"rounded-circle border-top-0 ")  %>
