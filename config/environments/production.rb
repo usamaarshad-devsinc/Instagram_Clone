@@ -60,8 +60,8 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     port: 587,
     domain: 'obscure-lake-35756.herokuapp.com',
-    user_name: 'usama.arshad@devsinc.com',
-    password: 'btqzvhcwbbnosgsl',
+    user_name: Rails.application.credentials[:email],
+    password: Rails.application.credentials[:mailer_password],
     authentication: 'plain',
     enable_starttls_auto: true
   }
