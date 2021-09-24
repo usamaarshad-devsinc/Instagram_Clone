@@ -19,6 +19,10 @@ class PostPolicy < ApplicationPolicy
     user_is_owner_of_record?
   end
 
+  def delete_image?
+    user_is_owner_of_record?
+  end
+
   private
 
   def user_is_owner_of_record?

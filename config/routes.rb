@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   root 'posts#index'
   resources :posts, shallow: true do
+    delete 'delete_image/:id', to: 'posts#delete_image', as: :delete_image
     resources :comments, except: %i[index new show]
     resources :likes, only: %i[create destroy]
   end

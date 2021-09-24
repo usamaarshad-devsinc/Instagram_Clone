@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   before_action :authorization, only: %i[edit update destroy]
 
   after_action :verify_policy_scoped, only: :index
-  after_action :verify_authorized, only: %i[edit update destroy]
+  after_action :verify_authorized, only: %i[edit update delete_image destroy]
 
   def index
     load_posts_and_stories
@@ -19,7 +19,6 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
-    flash[:notice] = ''
   end
 
   def create
@@ -57,6 +56,13 @@ class PostsController < ApplicationController
     @comments = @post.comments
   end
 
+  def delete_image
+    @post = Post.find_by(id: params[:post_id])
+    authorize @post
+    @index = params[:id].to_i
+    @post.images[@index].purge
+  end
+
   private
 
   def posts_params
@@ -73,6 +79,7 @@ class PostsController < ApplicationController
   end
 
   def load_post
+    flash[:notice] = ''
     @post = Post.find_by(id: params[:id])
   end
 
