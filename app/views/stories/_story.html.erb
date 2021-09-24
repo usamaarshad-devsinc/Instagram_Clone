@@ -6,7 +6,7 @@
               data: { confirm: 'Are you sure?' }, remote: true %>
   <% end %>
   <div class="card-body">
-    <strong><%= story.account.email %></strong>
+    <strong><%= story.account.username %></strong>
     <p class="card-text">
       <%= cl_image_tag(story.image.key, height: 300, width: 300, class:'rounded cropped1' ) if story.image.attached? %>
     </p>
