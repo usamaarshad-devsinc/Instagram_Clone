@@ -8,10 +8,10 @@
           <p>
             <p class="card-text">
               <% if account.profile_pic.attached? %>
-                <%= cl_image_tag(account.profile_pic.key, width: 120, height: 120 , class:"rounded-circle border-top-0 cropped1")  %>
+                <%= cl_image_tag(account.profile_pic.key, width: 250, height: 250 , class:"rounded-circle border-top-0 cropped1")  %>
                 <%#= link_to 'Remove',to: @post.images[image].purge %>
               <% else %>
-                <%= image_tag('default.png', width: 120, class:"rounded-circle border-top-0 ")  %>
+                <%= image_tag('default.png', width: 250, height: 250, class:"rounded-circle border-top-0 ")  %>
               <% end %>
             </p>
           </p>
@@ -35,32 +35,34 @@
         </div>
       </div>
       <br/>
-      <% if request_accepted?(account) %>
-        <div class="card d-flex flex-row row" >
-          <div class="col">
-            <div class="card-header">
-              <% @list = followers_list(account) %>
-              <h5 class="title followers_count"><strong>Followers (<%= @list.size %>) <strong></h5>
+      <% if request_accepted?(account) || !account.is_private || (account.id == current_account.id) %>
+        <div class='show_profile' >
+          <div class="card d-flex flex-row row" >
+            <div class="col">
+              <div class="card-header">
+                <% @list = followers_list(account) %>
+                <h5 class="title followers_count"><strong>Followers (<%= @list.size %>) <strong></h5>
+              </div>
+              <ul class="list-group list-group-flush followers_list">
+                <% @list.each do |acc|%>
+                  <li class="list-group-item follower_<%= acc.id %>"><%= link_to acc.email, profile_path(account: acc) %></li>
+                <% end %>
+              </ul>
             </div>
-            <ul class="list-group list-group-flush followers_list">
-              <% @list.each do |acc|%>
-                <li class="list-group-item follower_<%= acc.id %>"><%= link_to acc.email, profile_path(account: acc) %></li>
-              <% end %>
-            </ul>
-          </div>
-          <div class="col">
-            <div class="card-header">
-              <% @list = followees_list(account) %>
-              <h5 class="title followees_count"><strong>Following (<%= @list.size %>) <strong></h5>
+            <div class="col">
+              <div class="card-header">
+                <% @list = followees_list(account) %>
+                <h5 class="title followees_count"><strong>Following (<%= @list.size %>) <strong></h5>
+              </div>
+              <ul class="list-group list-group-flush followees_list">
+                <% @list.each do |acc|%>
+                  <li class="list-group-item followee_<%= acc.id %>"><%= link_to "#{acc.email}", profile_path(account: acc) %></li>
+                <% end %>
+              </ul>
             </div>
-            <ul class="list-group list-group-flush followees_list">
-              <% @list.each do |acc|%>
-                <li class="list-group-item followee_<%= acc.id %>"><%= link_to "#{acc.email}", profile_path(account: acc) %></li>
-              <% end %>
-            </ul>
           </div>
+          <%= render account.posts %>
         </div>
-        <%= render account.posts %>
       <% end %>
     </div>
   </div>
