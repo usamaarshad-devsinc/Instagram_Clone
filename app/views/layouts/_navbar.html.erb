@@ -29,7 +29,7 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="d-flex p-2">
                 <p class = "px-2">
-                  <%= current_account.email %>
+                  <strong><%= current_account.username %></strong>
                 </p>
                 <p class="card-text ">
                   <% if current_account.profile_pic.attached? %>

@@ -14,4 +14,6 @@ Rails.application.routes.draw do
     resources :comments, except: %i[index new show]
     resources :likes, only: %i[create destroy]
   end
+  # get '/*undefined', to: redirect('/404.html')
+  get '/*undefined', to: redirect('posts#index')
 end
