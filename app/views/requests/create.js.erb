@@ -1,6 +1,6 @@
 $(".follow_<%= @request.recipient_id %>").replaceWith('<%= j render 'accounts/unfollow_form', account: @request.recipient, request: @request %>')
 $("#notice").text('Request was successfully sent.')
-if ( '<%= j (!@request.recipient.is_private).to_s %>' == 'true' )
+if ( '<%= (!@request.recipient.is_private) %>' == 'true' )
 {
   $('.followers_count').empty().append('<strong>Followers (<%= followers_count(@request.recipient_id) %>) <strong>')
   $('.followers_list').append('<li class="list-group-item follower_<%= j @request.sender.id.to_s %>"><%= j link_to @request.sender.email, profile_path(account: @request.sender) %></li>')

@@ -39,9 +39,9 @@
         <div class='show_profile' >
           <div class="card d-flex flex-row row" >
             <% @list = followers_list(account) %>
-            <%= render partial:'accounts/friends', locals: {label:'Followers', list:@list} %>
+            <%= render partial:'accounts/friends', locals: {label:'Followers', list:@list, class_name:'followers'} %>
             <% @list = followees_list(account) %>
-            <%= render partial:'accounts/friends', locals: {label:'Folowing', list:@list} %>
+            <%= render partial:'accounts/friends', locals: {label:'Folowing', list:@list, class_name:'followees'} %>
           </div>
           <%= render account.posts %>
         </div>
