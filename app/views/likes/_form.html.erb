@@ -2,10 +2,7 @@
   <div class="div_like_button_<%= post.id %>">
     <% total_likes=  total_likes_on_post(post) %>
     <% if already_liked?(post.id) %>
-      <%= link_to "Unlike (#{total_likes}) ", like_path(post.id),
-                      method: :delete,
-                      remote: true,
-                      class: "btn btn-primary like_button_#{post.id}" %>
+      <%= render 'likes/unlike_form', post: post , total_likes: total_likes %>
     <% else %>
         <%= render 'likes/like_form', post: post , total_likes: total_likes %>
     <% end %>

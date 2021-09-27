@@ -27,6 +27,6 @@ Things you may want to cover:
   Command: bundle install
 * To setup database (create, load schema, populate with initial test data)
   Command: rails db:setup
-* To start Thibking Sphinx
+* To start Thinking Sphinx
   Commands: rails ts:index
            rails ts:start

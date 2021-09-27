@@ -2,8 +2,10 @@
 
 class AddDetailsToAccounts < ActiveRecord::Migration[5.2]
   def change
-    add_column :accounts, :full_name, :text
-    add_column :accounts, :username, :text
-    add_column :accounts, :is_private, :boolean
+    change_table :accounts, bulk: true do |t|
+      t.text :full_name
+      t.text :username
+      t.boolean :is_private
+    end
   end
 end

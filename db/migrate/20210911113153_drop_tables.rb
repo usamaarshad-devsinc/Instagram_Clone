@@ -2,9 +2,9 @@
 
 class DropTables < ActiveRecord::Migration[5.2]
   def change
-    drop_table :posts
-    drop_table :stories
-    drop_table :likes
-    drop_table :comments
+    drop_table :posts do end # rubocop:disable Style/BlockDelimiters
+    drop_table :stories do end # rubocop:disable Style/BlockDelimiters
+    drop_table :likes do end # rubocop:disable Style/BlockDelimiters
+    drop_table :comments do end # rubocop:disable Style/BlockDelimiters
   end
 end

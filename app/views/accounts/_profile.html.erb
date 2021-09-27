@@ -3,15 +3,15 @@
   <div class="d-table-caption card-header  p-4">
     <div class="card container col-4 d-flex align-items-center">
       <div class="card col-4"></div>
-      <div class="card col-4">
+      <div class="card col-10">
         <div class="card-body text-align-left">
           <p>
             <p class="card-text">
               <% if account.profile_pic.attached? %>
-                <%= image_tag(account.profile_pic, width: 120, height: 120 , class:"rounded-circle border-top-0 cropped1")  %>
+                <%= cl_image_tag(account.profile_pic.key, width: 250, height: 250 , class:"rounded-circle border-top-0 cropped1")  %>
                 <%#= link_to 'Remove',to: @post.images[image].purge %>
               <% else %>
-                <%= image_tag('default.png', width: 120, class:"rounded-circle border-top-0 ")  %>
+                <%= image_tag('default.png', width: 250, height: 250, class:"rounded-circle border-top-0 ")  %>
               <% end %>
             </p>
           </p>
@@ -23,36 +23,47 @@
           <p class="card-text"><strong><%= account.username %></strong></p>
           <a href="#" class="card-link"><%= account.email %></a>
           <p class="card-text"><strong>Joined: </strong><%= time_ago_in_words(account.created_at) %></p>
+          <% @show_posts = true %>
           <% if account.id == current_account.id %>
             <%= link_to 'Edit Profile', edit_account_registration_path %>
           <% elsif already_followed?( account.id, current_account.id) %>
             <%= render 'accounts/unfollow_form', account: account, request: find_request(account) %>
           <% else %>
             <%= render 'accounts/follow_form', account: account %>
+            <% @show_posts = false %>
           <% end %>
         </div>
       </div>
       <br/>
-      <div class="card col-4" >
-        <div class="card-header">
-          <% @list = followers_list(account) %>
-          <h5 class="title followers_count"><strong>Followers (<%= @list.size %>) <strong></h5>
+      <% if request_accepted?(account) || !account.is_private || (account.id == current_account.id) %>
+        <div class='show_profile' >
+          <div class="card d-flex flex-row row" >
+            <div class="col">
+              <div class="card-header">
+                <% @list = followers_list(account) %>
+                <h5 class="title followers_count"><strong>Followers (<%= @list.size %>) <strong></h5>
+              </div>
+              <ul class="list-group list-group-flush followers_list">
+                <% @list.each do |acc|%>
+                  <li class="list-group-item follower_<%= acc.id %>"><%= link_to acc.email, profile_path(account: acc) %></li>
+                <% end %>
+              </ul>
+            </div>
+            <div class="col">
+              <div class="card-header">
+                <% @list = followees_list(account) %>
+                <h5 class="title followees_count"><strong>Following (<%= @list.size %>) <strong></h5>
+              </div>
+              <ul class="list-group list-group-flush followees_list">
+                <% @list.each do |acc|%>
+                  <li class="list-group-item followee_<%= acc.id %>"><%= link_to "#{acc.email}", profile_path(account: acc) %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <%= render account.posts %>
         </div>
-        <ul class="list-group list-group-flush followers_list">
-          <% @list.each do |acc|%>
-            <li class="list-group-item follower_<%= acc.id %>"><%= link_to acc.email, profile_path(account: acc) %></li>
-          <% end %>
-        </ul>
-        <div class="card-header">
-          <% @list = followees_list(account) %>
-          <h5 class="title followees_count"><strong>Following (<%= @list.size %>) <strong></h5>
-        </div>
-        <ul class="list-group list-group-flush followees_list">
-          <% @list.each do |acc|%>
-            <li class="list-group-item followee_<%= acc.id %>"><%= link_to "#{acc.email}", profile_path(account: acc) %></li>
-          <% end %>
-        </ul>
-      </div>
+      <% end %>
     </div>
   </div>
 </div >

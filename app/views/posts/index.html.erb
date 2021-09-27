@@ -1,13 +1,13 @@
 
 
-<div class="d-flex">
+<div class="d-flex main_div">
   <% if @stories.size > 0 %>
-    <div class="card" >
+    <div class="card stories_card" >
       <div class="card-header">
         Stories
       </div>
       <div class="overflow-auto">
-        <ul class="list-group">
+        <ul class="list-group stories_ul">
           <%= render @stories %>
         </ul>
       </div>

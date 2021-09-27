@@ -20,6 +20,7 @@ class Account < ApplicationRecord
                            dependent: :destroy,
                            inverse_of: 'sender'
 
+  validates :username, uniqueness: true
   validate :presence_check
   after_update :check_for_pending_requests
 

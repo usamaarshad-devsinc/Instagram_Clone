@@ -8,8 +8,10 @@
       <% if @post.images.attached? %>
         <% (0...@post.images.count).each do |image|%>
           <%#= link_to 'Remove', onclick: @post.images[image].purge %>
-          <%= image_tag(@post.images[image], width: 500 )%>
-          <%= link_to 'Remove',to: @post.images[image].purge %>
+          <%= cl_image_tag(@post.images[image].key, width: 500, cloud_name: 'devsinc-rails-test-project', class:"post_#{@post.id}_image_#{image}" )%>
+          <%= link_to 'Remove',post_delete_image_path(@post,image),
+                method: :delete, class:"delete_link_post_#{@post.id}_image_#{image}",
+                data: { confirm: 'Are you sure?' }, remote: true %>
         <% end %>
       <% end %>
     </p>

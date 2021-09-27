@@ -39,7 +39,7 @@ class StoriesController < ApplicationController
   private
 
   def load_story
-    @story = Story.find(params[:id])
+    @story = Story.find_by(id: params[:id])
   end
 
   def story_params
