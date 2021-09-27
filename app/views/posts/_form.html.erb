@@ -7,8 +7,7 @@
     <p class="card-text">
       <% if @post.images.attached? %>
         <% (0...@post.images.count).each do |image|%>
-          <%#= link_to 'Remove', onclick: @post.images[image].purge %>
-          <%= cl_image_tag(@post.images[image].key, width: 500, cloud_name: 'devsinc-rails-test-project', class:"post_#{@post.id}_image_#{image}" )%>
+          <%= cl_image_tag(@post.images[image].key, width: 500, cloud_name: 'devsinc-rails-test-project', class:"post_has_image post_#{@post.id}_image_#{image}" )%>
           <%= link_to 'Remove',post_delete_image_path(@post,image),
                 method: :delete, class:"delete_link_post_#{@post.id}_image_#{image}",
                 data: { confirm: 'Are you sure?' }, remote: true %>
@@ -16,7 +15,7 @@
       <% end %>
     </p>
     <p class="card-text" style="padding-left:7rem;">
-    <%= form.file_field :images, multiple: :true, max: 10 , required: true %>
+    <%= form.file_field :images, multiple: :true, max: 10 , required: true, class:'select_files' %>
     </p>
   </p>
   <p>
@@ -24,6 +23,6 @@
     <%= form.text_area :description %>
   </p>
   <p>
-    <%= form.submit btn_text, to: :post %>
+    <%= form.submit btn_text, to: :post, class:'submit' %>
   </p>
 <% end %>
