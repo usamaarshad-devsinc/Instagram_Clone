@@ -38,28 +38,10 @@
       <% if show_profile?(account) %>
         <div class='show_profile' >
           <div class="card d-flex flex-row row" >
-            <div class="col">
-              <div class="card-header">
-                <% @list = followers_list(account) %>
-                <h5 class="title followers_count"><strong>Followers (<%= @list.size %>) <strong></h5>
-              </div>
-              <ul class="list-group list-group-flush followers_list">
-                <% @list.each do |acc|%>
-                  <li class="list-group-item follower_<%= acc.id %>"><%= link_to acc.email, profile_path(account: acc) %></li>
-                <% end %>
-              </ul>
-            </div>
-            <div class="col">
-              <div class="card-header">
-                <% @list = followees_list(account) %>
-                <h5 class="title followees_count"><strong>Following (<%= @list.size %>) <strong></h5>
-              </div>
-              <ul class="list-group list-group-flush followees_list">
-                <% @list.each do |acc|%>
-                  <li class="list-group-item followee_<%= acc.id %>"><%= link_to "#{acc.email}", profile_path(account: acc) %></li>
-                <% end %>
-              </ul>
-            </div>
+            <% @list = followers_list(account) %>
+            <%= render partial:'accounts/friends', locals: {label:'Followers', list:@list} %>
+            <% @list = followees_list(account) %>
+            <%= render partial:'accounts/friends', locals: {label:'Folowing', list:@list} %>
           </div>
           <%= render account.posts %>
         </div>
