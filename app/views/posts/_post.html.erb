@@ -1,7 +1,7 @@
 <div class="m-1 d-table-caption container-fluid rounded card-header post_div_<%= post.id %>"  >
   <div class="p-3  d-flex justify-content-between" >
 
-    <div class="d-flex">
+    <div class="d-flex mt-auto">
       <div>
         <% if post.account.profile_pic.attached? %>
           <%= cl_image_tag(post.account.profile_pic.key, width: 20, height: 20,class:"rounded-circle border-top-0 cropped1")  %>
