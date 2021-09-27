@@ -10,8 +10,17 @@ ready = ->
       $('#post_images')[0].files = emptyFile.files
       alert 'You can select maximum 10 images'
 
-    return
+  $('.submit').on 'click', ->
+    if $('.post_has_image').length > 0
+      $('.select_files').attr('required',false)
+    else
+      $('.select_files').attr('required',true)
 
+  $('.post_has_image').on 'change', ->
+    if $('.post_has_image').length > 0
+      $('.back_button').show()
+    else
+      $('.back_button').hide()
 
 $(document).ready(ready)
 $(document).on('turbolinks:load', ready)
