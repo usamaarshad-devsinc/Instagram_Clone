@@ -18,6 +18,6 @@ module ApplicationHelper
   end
 
   def request_accepted?(account)
-    current_account.requests_sent.accepted_sent_requests.exists?(recipient_id: account.id )
+    current_account.requests_sent.accepted_sent_requests.exists?(recipient_id: account.id)
   end
 end

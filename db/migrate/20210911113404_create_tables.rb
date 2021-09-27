@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CreateTables < ActiveRecord::Migration[5.2]
-  def change
+  def change # rubocop:disable Metrics/AbcSize
     create_table :stories do |t|
       t.text :description
       t.references :account, foreign_key: true
