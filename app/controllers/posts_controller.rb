@@ -2,11 +2,8 @@
 
 class PostsController < ApplicationController
   before_action :set_post, only: %i[edit update destroy show]
-  before_action :set_account, only: %i[index home_page]
+  before_action :set_account, only: :index
   before_action :authorization, only: %i[edit update destroy]
-
-  after_action :verify_policy_scoped, only: :index
-  after_action :verify_authorized, only: %i[edit update delete_image destroy]
 
   def index
     set_posts_and_stories

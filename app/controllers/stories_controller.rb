@@ -2,8 +2,6 @@
 
 class StoriesController < ApplicationController
   before_action :set_story, only: %i[show destroy]
-  after_action :verify_policy_scoped, only: :index
-  after_action :verify_authorized, only: :destroy
 
   def index
     @stories = policy_scope(Story)

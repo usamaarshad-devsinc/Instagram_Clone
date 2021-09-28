@@ -2,7 +2,6 @@
 
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[edit update destroy]
-  after_action :verify_authorized, only: %i[edit update destroy]
 
   def create
     @comment = Comment.new(text: comments_params[:text], post_id: params[:post_id], account_id: current_account.id)
