@@ -41,11 +41,13 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    return unless @post.destroy
-
-    respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Post was successfuly deleted.' }
-      format.js
+    if @post.destroy
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Post was successfuly deleted.' }
+        format.js
+      end
+    else
+      flash[:notice] = @post.errors.full_messages
     end
   end
 
