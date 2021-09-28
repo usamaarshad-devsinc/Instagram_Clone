@@ -11,7 +11,6 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
-    authorization
   end
 
   def create

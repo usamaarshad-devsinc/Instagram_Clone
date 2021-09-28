@@ -9,7 +9,6 @@ class StoriesController < ApplicationController
 
   def new
     @story = Story.new
-    authorize @story
   end
 
   def create

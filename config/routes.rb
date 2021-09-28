@@ -3,10 +3,10 @@
 Rails.application.routes.draw do
   devise_for :accounts
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  get 'search', to: 'public#search'
+  get 'search', to: 'accounts#search'
   resources :requests, only: %i[create update destroy]
   resources :stories, except: %i[edit update]
-  get 'profile', to: 'public#profile'
+  get 'profile', to: 'accounts#profile'
 
   root 'posts#index'
   resources :posts, shallow: true do

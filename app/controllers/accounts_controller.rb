@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class PublicController < ApplicationController
-  include PublicHelper
+class AccountsController < ApplicationController
+  include AccountsHelper
 
   def search
     username = params[:username]
