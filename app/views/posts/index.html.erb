@@ -2,8 +2,8 @@
 
 <div class="d-flex main_div">
   <% if @stories.size > 0 %>
-    <div class="card col- stories_card" >
-      <div class="card-header">
+    <div class="card col- stories_card " >
+      <div class="card-header bottom_border">
         Stories
       </div>
       <div class="overflow-auto">
@@ -25,7 +25,7 @@
   <% if current_account.is_private %>
     <% if @requests.size > 0 %>
       <div class="card col-2 requests_col" >
-        <div class="card-header">
+        <div class="card-header bottom_border">
           Requests
         </div>
         <div class="overflow-auto">
