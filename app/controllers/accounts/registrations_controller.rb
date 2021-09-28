@@ -21,7 +21,7 @@ module Accounts
     def update
       # super
       account_params = params.require(:account).permit(:full_name, :username, :profile_pic, :is_private)
-      current_account.update!(account_params)
+      current_account.update(account_params)
     end
 
     # DELETE /resource
