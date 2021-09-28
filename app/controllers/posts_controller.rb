@@ -13,10 +13,6 @@ class PostsController < ApplicationController
     @requests = Request.pending_requests_recieved(@account)
   end
 
-  def home_page
-    @account.followees
-  end
-
   def new
     @post = Post.new
   end
