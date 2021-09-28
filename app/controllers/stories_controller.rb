@@ -9,10 +9,12 @@ class StoriesController < ApplicationController
 
   def new
     @story = Story.new
+    authorize @story
   end
 
   def create
     @story = current_account.stories.new(story_params)
+    authorize @story
     if @story.save
       flash[:notice] = 'Post was successfuly created.'
       redirect_to root_path
@@ -26,11 +28,13 @@ class StoriesController < ApplicationController
 
   def destroy
     authorize @story
-    return unless @story.destroy
-
-    respond_to do |format|
-      format.html { redirect_to root_path, flash[notice: 'Story was successfuly deleted.'] }
-      format.js
+    if @story.destroy
+      respond_to do |format|
+        format.html { redirect_to root_path, flash[notice: 'Story was successfuly deleted.'] }
+        format.js
+      end
+    else
+      flash[:notice] = @story.errors.full_messages
     end
   end
 

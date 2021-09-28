@@ -11,10 +11,12 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    authorization
   end
 
   def create
     @post = current_account.posts.new(posts_params)
+    authorization
     if @post.save
       flash[:notice] = 'Post was successfuly created.'
       redirect_to @post

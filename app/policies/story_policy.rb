@@ -7,12 +7,20 @@ class StoryPolicy < ApplicationPolicy
     end
   end
 
+  def new?
+    user_is_owner_of_record?
+  end
+
+  def create?
+    user_is_owner_of_record?
+  end
+
   def edit?
     false
   end
 
   def update?
-    user_is_owner_of_record?
+    false
   end
 
   def destroy?

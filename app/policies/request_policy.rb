@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class PostPolicy < ApplicationPolicy
+class RequestPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.records_to_show(account)
+      scope.all
     end
   end
 
@@ -16,24 +16,24 @@ class PostPolicy < ApplicationPolicy
   end
 
   def edit?
-    user_is_owner_of_record?
+    false
   end
 
   def update?
-    user_is_owner_of_record?
+    user_is_owner_of_record? || user_is_recipient_of_record?
   end
 
   def destroy?
-    user_is_owner_of_record?
-  end
-
-  def delete_image?
-    user_is_owner_of_record?
+    user_is_owner_of_record? || user_is_recipient_of_record?
   end
 
   private
 
   def user_is_owner_of_record?
-    account == record.account
+    account == record.sender
+  end
+
+  def user_is_recipient_of_record?
+    account == record.recipient
   end
 end

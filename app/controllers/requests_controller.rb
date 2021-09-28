@@ -2,6 +2,7 @@
 
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[update destroy]
+
   def create
     recipient_id = params[:recipient_id]
     generate_request(recipient_id)
@@ -12,6 +13,7 @@ class RequestsController < ApplicationController
   end
 
   def update
+    authorize @request
     @request.update(status: 'accepted') if @request.status == 'pending'
     flash[:notice] = 'Request was successfuly accepted.'
     respond_to do |format|
@@ -21,6 +23,7 @@ class RequestsController < ApplicationController
   end
 
   def destroy
+    authorize @request
     flash[:notice] = @request.destroy ? 'Request was successfuly deleted.' : @request.errors.full_messages
     respond_to do |format|
       format.html { redirect_to root_path }
@@ -31,6 +34,7 @@ class RequestsController < ApplicationController
   private
 
   def delete_request(recipient_id)
+    authorize @request, :destroy?
     Request.find_by(recipient_id: recipient_id, sender_id: current_account.id).destroy
   end
 
@@ -44,16 +48,9 @@ class RequestsController < ApplicationController
 
   def generate_request(recipient_id)
     @request = Request.new(recipient_id: recipient_id, sender_id: current_account.id)
+    authorize @request, :create?
     recipient = Account.find_by(id: recipient_id)
     @request.status = recipient.is_private ? 'pending' : 'accepted'
     flash[:notice] = @request.save ? 'Request sent!' : @request.errors.full_messages
-  end
-
-  def send_mail(_user)
-    respond_to do |format|
-      UserMailer.with(user: @user).welcome_email.deliver_later
-      format.html { redirect_to(@user, notice: 'User was successfully created.') }
-      format.json { render json: @user, status: :created, location: @user }
-    end
   end
 end
