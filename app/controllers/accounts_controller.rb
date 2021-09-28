@@ -11,6 +11,7 @@ class AccountsController < ApplicationController
 
   def profile
     @account = Account.find_by(id: params[:account])
+    render_error('Profile') if @account.nil?
   end
 
   private

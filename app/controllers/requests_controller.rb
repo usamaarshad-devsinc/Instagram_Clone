@@ -34,12 +34,18 @@ class RequestsController < ApplicationController
   private
 
   def delete_request(recipient_id)
-    authorize @request, :destroy?
-    Request.find_by(recipient_id: recipient_id, sender_id: current_account.id).destroy
+    @request = Request.find_by(recipient_id: recipient_id, sender_id: current_account.id)
+    if @request.nil?
+      render_error('Request')
+    else
+      authorize @request, :destroy?
+      @request.destroy
+    end
   end
 
   def set_request
     @request = Request.find_by(id: params[:id])
+    render_error('Request')
   end
 
   def already_followed?(recipient_id)
@@ -50,7 +56,11 @@ class RequestsController < ApplicationController
     @request = Request.new(recipient_id: recipient_id, sender_id: current_account.id)
     authorize @request, :create?
     recipient = Account.find_by(id: recipient_id)
-    @request.status = recipient.is_private ? 'pending' : 'accepted'
-    flash[:notice] = @request.save ? 'Request sent!' : @request.errors.full_messages
+    if recipient.nil?
+      render_error('Account')
+    else
+      @request.status = recipient.is_private ? 'pending' : 'accepted'
+      flash[:notice] = @request.save ? 'Request sent!' : @request.errors.full_messages
+    end
   end
 end

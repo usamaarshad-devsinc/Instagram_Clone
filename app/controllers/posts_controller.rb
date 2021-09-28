@@ -54,6 +54,7 @@ class PostsController < ApplicationController
 
   def delete_image
     @post = Post.find_by(id: params[:post_id])
+    render_error('Post') if @post.nil?
     authorize @post
     @index = params[:id].to_i
     @post.images[@index].purge
@@ -77,6 +78,7 @@ class PostsController < ApplicationController
   def set_post
     flash[:notice] = ''
     @post = Post.find_by(id: params[:id])
+    render_error('Post') if @post.nil?
   end
 
   def authorization

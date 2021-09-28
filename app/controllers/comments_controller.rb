@@ -42,6 +42,10 @@ class CommentsController < ApplicationController
 
   def set_comment
     @comment = Comment.find_by(id: params[:id])
-    authorize @comment
+    if @comment.nil?
+      render_error('Comment')
+    else
+      authorize @comment
+    end
   end
 end

@@ -41,6 +41,7 @@ class StoriesController < ApplicationController
 
   def set_story
     @story = Story.find_by(id: params[:id])
+    render_error('Story') if @story.nil?
   end
 
   def story_params

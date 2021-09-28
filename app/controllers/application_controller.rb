@@ -29,4 +29,8 @@ class ApplicationController < ActionController::Base
     flash[:notice] = 'You are not authorized to perform this action.'
     redirect_to(request.referer || root_path)
   end
+
+  def render_error(resource)
+    render partial: 'layouts/record_not_found', locals: { resource: resource }
+  end
 end

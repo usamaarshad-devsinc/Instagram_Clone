@@ -5,6 +5,7 @@ class LikesController < ApplicationController
     like_it
     @likes = Like.total_likes_on_post(params[:post_id])
     @post = Post.find_by(id: params[:post_id])
+    render_error('Post you are trying to like') if @post.nil?
     respond_to do |format|
       format.html { redirect_to root_path }
       format.js
@@ -15,6 +16,7 @@ class LikesController < ApplicationController
     flash[:notice] = 'Successfully unliked.'
     Like.find_by(account_id: current_account.id, post_id: params[:id]).destroy
     @post = Post.find_by(id: params[:id])
+    render_error('Post') if @post.nil?
     @likes = Like.total_likes_on_post(params[:id])
   end
 
