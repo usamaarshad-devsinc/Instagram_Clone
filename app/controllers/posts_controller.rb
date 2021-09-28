@@ -2,12 +2,11 @@
 
 class PostsController < ApplicationController
   before_action :set_post, only: %i[edit update destroy show]
-  before_action :set_account, only: :index
   before_action :authorization, only: %i[edit update destroy]
 
   def index
     set_posts_and_stories
-    @requests = Request.pending_requests_recieved(@account)
+    @requests = Request.pending_requests_recieved(current_account)
   end
 
   def new
@@ -67,8 +66,8 @@ class PostsController < ApplicationController
 
   def set_posts_and_stories
     @posts = policy_scope(Post)
-    @stories = [].concat @account.stories
-    requests = Request.where(sender: @account, status: 'accepted')
+    @stories = [].concat current_account.stories
+    requests = Request.where(sender: current_account, status: 'accepted')
     requests.each do |req|
       @stories.concat(req.recipient.stories)
     end
@@ -77,10 +76,6 @@ class PostsController < ApplicationController
   def set_post
     flash[:notice] = ''
     @post = Post.find_by(id: params[:id])
-  end
-
-  def set_account
-    @account = current_account
   end
 
   def authorization
