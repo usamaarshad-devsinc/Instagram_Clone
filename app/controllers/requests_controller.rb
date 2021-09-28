@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RequestsController < ApplicationController
-  before_action :load_request, only: %i[update destroy]
+  before_action :set_request, only: %i[update destroy]
   def create
     recipient_id = params[:recipient_id]
     generate_request(recipient_id)
@@ -34,7 +34,7 @@ class RequestsController < ApplicationController
     Request.find_by(recipient_id: recipient_id, sender_id: current_account.id).destroy
   end
 
-  def load_request
+  def set_request
     @request = Request.find_by(id: params[:id])
   end
 

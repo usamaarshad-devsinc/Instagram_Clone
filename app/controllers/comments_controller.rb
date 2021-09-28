@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
-  before_action :load_comment, only: %i[edit update destroy]
+  before_action :set_comment, only: %i[edit update destroy]
   after_action :verify_authorized, only: %i[edit update destroy]
 
   def create
     @comment = Comment.new(text: comments_params[:text], post_id: params[:post_id], account_id: current_account.id)
-    flash[:notice] = if @comment.save
-                       'Comment was successfuly posted.'
-                     else
-                       'Some errors occur in commenting this post.'
-                     end
+    flash[:notice] = @comment.save ? 'Comment was successfuly posted.' : 'Some errors occur in commenting this post.'
+
     respond_to do |format|
       format.html { redirect_to post_path(@comment.post) }
       format.js
@@ -44,7 +41,7 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:text)
   end
 
-  def load_comment
+  def set_comment
     @comment = Comment.find_by(id: params[:id])
     authorize @comment
   end

@@ -30,7 +30,7 @@ class LikesController < ApplicationController
     flash[:notice] = if like.save
                        'Post was successfuly liked.'
                      else
-                       'Some errors occur in liking this post.'
+                       like.errors.full_messages
                      end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StoriesController < ApplicationController
-  before_action :load_story, only: %i[show destroy]
+  before_action :set_story, only: %i[show destroy]
   after_action :verify_policy_scoped, only: :index
   after_action :verify_authorized, only: :destroy
 
@@ -38,7 +38,7 @@ class StoriesController < ApplicationController
 
   private
 
-  def load_story
+  def set_story
     @story = Story.find_by(id: params[:id])
   end
 

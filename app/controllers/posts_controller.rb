@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :load_post, only: %i[edit update destroy show]
-  before_action :load_account, only: %i[index home_page]
+  before_action :set_post, only: %i[edit update destroy show]
+  before_action :set_account, only: %i[index home_page]
   before_action :authorization, only: %i[edit update destroy]
 
   after_action :verify_policy_scoped, only: :index
   after_action :verify_authorized, only: %i[edit update delete_image destroy]
 
   def index
-    load_posts_and_stories
+    set_posts_and_stories
     @requests = Request.pending_requests_recieved(@account)
   end
 
@@ -27,7 +27,7 @@ class PostsController < ApplicationController
       flash[:notice] = 'Post was successfuly created.'
       redirect_to @post
     else
-      flash[:notice] = @post.errors.messages[:base]
+      flash[:notice] = @post.errors.full_messages
       redirect_to new_post_path(@post)
     end
   end
@@ -39,6 +39,7 @@ class PostsController < ApplicationController
       flash[:notice] = 'Post was successfuly updated.'
       redirect_to @post
     else
+      flash[:notice] = @post.errors.full_messages
       render 'edit'
     end
   end
@@ -69,7 +70,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(:description, images: [])
   end
 
-  def load_posts_and_stories
+  def set_posts_and_stories
     @posts = policy_scope(Post)
     @stories = [].concat @account.stories
     requests = Request.where(sender: @account, status: 'accepted')
@@ -78,12 +79,12 @@ class PostsController < ApplicationController
     end
   end
 
-  def load_post
+  def set_post
     flash[:notice] = ''
     @post = Post.find_by(id: params[:id])
   end
 
-  def load_account
+  def set_account
     @account = current_account
   end
 
