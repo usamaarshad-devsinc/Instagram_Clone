@@ -20,15 +20,11 @@ class Account < ApplicationRecord
                            dependent: :destroy,
                            inverse_of: 'sender'
 
-  validates :username, uniqueness: true
-  validate :name_presence_check
+  validates :username, presence: true, uniqueness: true, format: { with: /\A[a-z0-9-_]+\z/ }, length: { in: 6..24 }
+  validates :full_name, presence: true, format: { with: /\A[a-zA-Z]{6,24}+\z/, message: 'only allows letters' }
   after_update :check_for_pending_requests
 
   private
-
-  def name_presence_check
-    errors[:base] << ('Please give both - fullname and username.') if [full_name, username].count(&:blank?) > 1
-  end
 
   def check_for_pending_requests
     requests_recieved.where(status: 'pending').update(status: 'accepted') unless is_private
