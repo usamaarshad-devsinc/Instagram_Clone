@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Utilities
   include Pundit
   alias current_user current_account
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -28,9 +29,5 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash[:notice] = 'You are not authorized to perform this action.'
     redirect_to(request.referer || root_path)
-  end
-
-  def render_error(resource)
-    render partial: 'layouts/record_not_found', locals: { resource: resource }
   end
 end

@@ -40,7 +40,7 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      respond_to_block
+      respond_to_block(root_path)
     else
       flash[:notice] = @post.errors.full_messages
     end
@@ -61,7 +61,7 @@ class PostsController < ApplicationController
     like_it
     @likes = Like.total_likes_on_post(params[:post_id])
     render_error('Post') if @post.nil?
-    respond_to_block
+    respond_to_block(root_path)
   end
 
   def destroy_like
@@ -108,13 +108,6 @@ class PostsController < ApplicationController
                      else
                        like.errors.full_messages
                      end
-  end
-
-  def respond_to_block
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.js
-    end
   end
 
   def set_post_from_post_id

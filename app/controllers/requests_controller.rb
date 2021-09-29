@@ -54,13 +54,6 @@ class RequestsController < ApplicationController
     end
   end
 
-  def respond_to_block(path)
-    respond_to do |format|
-      format.html { redirect_to path }
-      format.js
-    end
-  end
-
   def authorization
     authorize @request
   end
