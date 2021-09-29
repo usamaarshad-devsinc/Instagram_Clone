@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[edit update destroy show destroy_like]
+  before_action :set_post, only: %i[edit update destroy show destroy_like] # rubocop:disable Rails/LexicallyScopedActionFilter
   before_action :set_post_from_post_id, only: %i[delete_image create_like]
-  before_action :authorization, only: %i[edit update destroy]
+  before_action :authorization, only: %i[edit update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
 
   def index
     set_posts_and_stories
@@ -25,8 +25,6 @@ class PostsController < ApplicationController
       redirect_to new_post_path(@post)
     end
   end
-
-  def edit; end
 
   def update
     if @post.update(posts_params)
@@ -55,7 +53,7 @@ class PostsController < ApplicationController
       render_error('Post')
     else
       authorize @post
-      @index = params[:id].to_i
+      @index = params[:id]
       @post.images[@index].purge
     end
   end
@@ -98,16 +96,12 @@ class PostsController < ApplicationController
   end
 
   def like_it
-    post_id = params[:post_id]
-    like = Like.new(account_id: current_account.id, post_id: post_id)
-    flash[:notice] = if like.save
-                       'Post was successfuly liked.'
-                     else
-                       like.errors.full_messages
-                     end
+    like = Like.new(account_id: current_account.id, post_id: params[:post_id])
+    flash[:notice] = like.save ? 'Post was successfuly liked.' : like.errors.full_messages
   end
 
   def set_post_from_post_id
     @post = Post.find_by(id: params[:post_id])
+    render_error('Post') if @post.nil?
   end
 end
