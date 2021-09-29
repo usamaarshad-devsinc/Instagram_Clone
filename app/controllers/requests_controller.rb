@@ -23,23 +23,9 @@ class RequestsController < ApplicationController
 
   private
 
-  def delete_request(recipient_id)
-    @request = Request.find_by(recipient_id: recipient_id, sender_id: current_account.id)
-    if @request.nil?
-      render_error('Request')
-    else
-      authorize @request, :destroy?
-      @request.destroy
-    end
-  end
-
   def set_request
     @request = Request.find_by(id: params[:id])
     render_error('Request') if @request.nil?
-  end
-
-  def already_followed?(recipient_id)
-    Request.exists?(recipient_id: recipient_id, sender_id: current_account.id)
   end
 
   def generate_request(recipient_id)
