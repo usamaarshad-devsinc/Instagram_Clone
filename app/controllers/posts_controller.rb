@@ -51,24 +51,25 @@ class PostsController < ApplicationController
   end
 
   def delete_image
-    render_error('Post') if @post.nil?
-    authorize @post
-    @index = params[:id].to_i
-    @post.images[@index].purge
+    if @post.nil?
+      render_error('Post')
+    else
+      authorize @post
+      @index = params[:id].to_i
+      @post.images[@index].purge
+    end
   end
 
   def create_like
     like_it
     @likes = Like.total_likes_on_post(params[:post_id])
-    render_error('Post') if @post.nil?
-    respond_to_block(root_path)
+    @post.nil? ? render_error('Post') : respond_to_block(root_path)
   end
 
   def destroy_like
     flash[:notice] = 'Successfully unliked.'
     Like.find_by(account_id: current_account.id, post_id: params[:id]).destroy
-    render_error('Post') if @post.nil?
-    @likes = Like.total_likes_on_post(params[:id])
+    @post.nil? ? render_error('Post') : @likes = Like.total_likes_on_post(params[:id])
   end
 
   def already_liked?
@@ -83,11 +84,7 @@ class PostsController < ApplicationController
 
   def set_posts_and_stories
     @posts = policy_scope(Post)
-    @stories = [].concat current_account.stories
-    requests = Request.where(sender: current_account, status: 'accepted')
-    requests.each do |req|
-      @stories.concat(req.recipient.stories)
-    end
+    @stories = policy_scope(Story)
   end
 
   def set_post
