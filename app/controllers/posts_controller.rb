@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[edit update destroy show]
+  before_action :set_post, only: %i[edit update destroy show destroy_like]
+  before_action :set_post_from_post_id, only: %i[delete_image create_like]
   before_action :authorization, only: %i[edit update destroy]
 
   def index
@@ -39,10 +40,7 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      respond_to do |format|
-        format.html { redirect_to root_path, notice: 'Post was successfuly deleted.' }
-        format.js
-      end
+      respond_to_block
     else
       flash[:notice] = @post.errors.full_messages
     end
@@ -53,7 +51,6 @@ class PostsController < ApplicationController
   end
 
   def delete_image
-    @post = Post.find_by(id: params[:post_id])
     render_error('Post') if @post.nil?
     authorize @post
     @index = params[:id].to_i
@@ -63,18 +60,13 @@ class PostsController < ApplicationController
   def create_like
     like_it
     @likes = Like.total_likes_on_post(params[:post_id])
-    @post = Post.find_by(id: params[:post_id])
     render_error('Post') if @post.nil?
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.js
-    end
+    respond_to_block
   end
 
   def destroy_like
     flash[:notice] = 'Successfully unliked.'
     Like.find_by(account_id: current_account.id, post_id: params[:id]).destroy
-    @post = Post.find_by(id: params[:id])
     render_error('Post') if @post.nil?
     @likes = Like.total_likes_on_post(params[:id])
   end
@@ -116,5 +108,16 @@ class PostsController < ApplicationController
                      else
                        like.errors.full_messages
                      end
+  end
+
+  def respond_to_block
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js
+    end
+  end
+
+  def set_post_from_post_id
+    @post = Post.find_by(id: params[:post_id])
   end
 end

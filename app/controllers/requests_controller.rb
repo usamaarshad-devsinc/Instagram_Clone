@@ -2,33 +2,23 @@
 
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[update destroy]
+  before_action :authorization, only: %i[update destroy]
 
   def create
     recipient_id = params[:recipient_id]
     generate_request(recipient_id)
-    respond_to do |format|
-      format.html { redirect_to profile_path(account: recipient_id) }
-      format.js
-    end
+    respond_to_block(profile_path(account: recipient_id))
   end
 
   def update
-    authorize @request
     @request.update(status: 'accepted') if @request.status == 'pending'
     flash[:notice] = 'Request was successfuly accepted.'
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.js
-    end
+    respond_to_block(root_path)
   end
 
   def destroy
-    authorize @request
     flash[:notice] = @request.destroy ? 'Request was successfuly deleted.' : @request.errors.full_messages
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.js
-    end
+    respond_to_block(root_path)
   end
 
   private
@@ -45,7 +35,7 @@ class RequestsController < ApplicationController
 
   def set_request
     @request = Request.find_by(id: params[:id])
-    render_error('Request')
+    render_error('Request') if @request.nil?
   end
 
   def already_followed?(recipient_id)
@@ -62,5 +52,16 @@ class RequestsController < ApplicationController
       @request.status = recipient.is_private ? 'pending' : 'accepted'
       flash[:notice] = @request.save ? 'Request sent!' : @request.errors.full_messages
     end
+  end
+
+  def respond_to_block(path)
+    respond_to do |format|
+      format.html { redirect_to path }
+      format.js
+    end
+  end
+
+  def authorization
+    authorize @request
   end
 end
