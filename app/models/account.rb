@@ -21,12 +21,12 @@ class Account < ApplicationRecord
                            inverse_of: 'sender'
 
   validates :username, uniqueness: true
-  validate :presence_check
+  validate :name_presence_check
   after_update :check_for_pending_requests
 
   private
 
-  def presence_check
+  def name_presence_check
     errors[:base] << ('Please give both - fullname and username.') if [full_name, username].count(&:blank?) > 1
   end
 

@@ -4,9 +4,9 @@ class AccountsController < ApplicationController
   include AccountsHelper
 
   def search
-    username = params[:username]
+    query = params[:username]
     # @results = Account.search(username, match_mode: :any)
-    @results = search_friends(username)
+    @results = search_friends(query)
   end
 
   def profile
