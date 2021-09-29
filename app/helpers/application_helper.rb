@@ -20,4 +20,8 @@ module ApplicationHelper
   def request_accepted?(account)
     current_account.requests_sent.accepted_sent_requests.exists?(recipient_id: account.id)
   end
+
+  def show_profile?(account)
+    request_accepted?(account) || !account.is_private || (account.id == current_account.id)
+  end
 end

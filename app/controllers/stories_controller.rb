@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class StoriesController < ApplicationController
-  before_action :load_story, only: %i[show destroy]
-  after_action :verify_policy_scoped, only: :index
-  after_action :verify_authorized, only: :destroy
+  before_action :set_story, only: %i[show destroy]
 
   def index
     @stories = policy_scope(Story)
@@ -15,6 +13,7 @@ class StoriesController < ApplicationController
 
   def create
     @story = current_account.stories.new(story_params)
+    authorize @story
     if @story.save
       flash[:notice] = 'Post was successfuly created.'
       redirect_to root_path
@@ -28,18 +27,21 @@ class StoriesController < ApplicationController
 
   def destroy
     authorize @story
-    return unless @story.destroy
-
-    respond_to do |format|
-      format.html { redirect_to root_path, flash[notice: 'Story was successfuly deleted.'] }
-      format.js
+    if @story.destroy
+      respond_to do |format|
+        format.html { redirect_to root_path, flash[notice: 'Story was successfuly deleted.'] }
+        format.js
+      end
+    else
+      flash[:notice] = @story.errors.full_messages
     end
   end
 
   private
 
-  def load_story
+  def set_story
     @story = Story.find_by(id: params[:id])
+    render_error('Story') if @story.nil?
   end
 
   def story_params

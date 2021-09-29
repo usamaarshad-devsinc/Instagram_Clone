@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PublicHelper
+module AccountsHelper
   def search_friends(email)
     Account.where('email ILIKE :q OR username ILIKE :q OR full_name ILIKE :q', q: "%#{email}%").order(:email)
   end

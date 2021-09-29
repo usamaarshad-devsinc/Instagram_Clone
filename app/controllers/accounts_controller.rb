@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class PublicController < ApplicationController
-  include PublicHelper
+class AccountsController < ApplicationController
+  include AccountsHelper
 
   def search
     username = params[:username]
@@ -11,6 +11,7 @@ class PublicController < ApplicationController
 
   def profile
     @account = Account.find_by(id: params[:account])
+    render_error('Profile') if @account.nil?
   end
 
   private
