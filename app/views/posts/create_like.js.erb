@@ -1,0 +1,2 @@
+$(".div_like_button_<%= @post.id %>").empty().append('<%= j render 'posts/unlike_form', post: @post , total_likes: @likes %>')
+$("#notice").text('Post was successfully Liked.')

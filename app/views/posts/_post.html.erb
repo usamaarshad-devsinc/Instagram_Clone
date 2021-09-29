@@ -71,7 +71,7 @@
 
     </p>
     <p class="card-text"><%= post.description %></p>
-    <%= render 'likes/form', post: post %>
+    <%= render 'posts/like_unlike_form', post: post %>
     <%= render partial: 'comments/form', locals: {post: post} %>
     </div>
     </div>
