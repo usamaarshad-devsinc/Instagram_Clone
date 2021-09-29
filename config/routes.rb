@@ -13,7 +13,6 @@ Rails.application.routes.draw do
     delete 'delete_image/:id', to: 'posts#delete_image', as: :delete_image
     resources :comments, except: %i[index new show]
     post 'likes/', to: 'posts#create_like', as: 'likes'
-    # resources :likes, only: %i[create destroy]
   end
   delete 'likes/:id', to: 'posts#destroy_like', as: 'unlike_post'
   # get '/*undefined', to: redirect('/404.html')
