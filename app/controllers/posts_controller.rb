@@ -49,7 +49,7 @@ class PostsController < ApplicationController
       render_error('Post')
     else
       authorize @post, :update?
-      @index = params[:id]
+      @index = params[:id].to_i
       @post.images[@index].purge
     end
   end
