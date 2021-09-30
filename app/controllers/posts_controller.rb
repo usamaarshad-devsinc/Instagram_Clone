@@ -37,11 +37,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if @post.destroy
-      respond_to_block(root_path)
-    else
-      flash[:notice] = @post.errors.full_messages
-    end
+    @post.destroy ? respond_to_block(root_path) : flash[:notice] = @post.errors.full_messages
   end
 
   def show
@@ -52,7 +48,7 @@ class PostsController < ApplicationController
     if @post.nil?
       render_error('Post')
     else
-      authorize @post
+      authorize @post, :update?
       @index = params[:id]
       @post.images[@index].purge
     end

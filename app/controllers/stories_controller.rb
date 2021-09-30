@@ -27,14 +27,7 @@ class StoriesController < ApplicationController
 
   def destroy
     authorize @story
-    if @story.destroy
-      respond_to do |format|
-        format.html { redirect_to root_path, flash[notice: 'Story was successfuly deleted.'] }
-        format.js
-      end
-    else
-      flash[:notice] = @story.errors.full_messages
-    end
+    @story.destroy ? respond_to_block(root_path) : flash[:notice] = @story.errors.full_messages
   end
 
   private
