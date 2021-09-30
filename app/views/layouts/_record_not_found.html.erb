@@ -23,7 +23,7 @@
     border-right-color: #999;
     border-left-color: #999;
     border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
+    border-top: #337ab7 solid 4px;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
     background-color: white;
@@ -33,7 +33,7 @@
 
   .rails-default-error-page h1 {
     font-size: 100%;
-    color: #730E15;
+    color: #337ab7;
     line-height: 1.5em;
   }
 
@@ -47,7 +47,7 @@
     border-bottom-color: #999;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
+    border-top-color: #337ab7;
     color: #666;
     box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
   }
@@ -61,6 +61,7 @@
       <p>You may have mistyped the address or the page may have moved.</p>
     </div>
     <p>Sorry! The request is invalid! No record found against your request! Please try again!</p>
+    <p><%= link_to 'Back to Home', root_path, class:"nav-link", style:"color: #337ab7;" %></p>
   </div>
 </body>
 </html>

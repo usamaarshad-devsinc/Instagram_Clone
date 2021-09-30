@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module AccountsHelper
-  def search_friends(email)
-    Account.where('email ILIKE :q OR username ILIKE :q OR full_name ILIKE :q', q: "%#{email}%").order(:email)
+  def search_friends(query)
+    Account.where('email ILIKE :q OR username ILIKE :q OR full_name ILIKE :q', q: "%#{query}%").order(:email)
   end
 
   def followees_list(account)

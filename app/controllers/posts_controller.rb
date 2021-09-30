@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[edit update destroy show]
-  before_action :authorization, only: %i[edit update destroy]
+  before_action :set_post, only: %i[edit update destroy show destroy_like] # rubocop:disable Rails/LexicallyScopedActionFilter
+  before_action :set_post_from_post_id, only: %i[delete_image create_like]
+  before_action :authorization, only: %i[edit update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
 
   def index
     set_posts_and_stories
@@ -25,8 +26,6 @@ class PostsController < ApplicationController
     end
   end
 
-  def edit; end
-
   def update
     if @post.update(posts_params)
       flash[:notice] = 'Post was successfuly updated.'
@@ -38,14 +37,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if @post.destroy
-      respond_to do |format|
-        format.html { redirect_to root_path, notice: 'Post was successfuly deleted.' }
-        format.js
-      end
-    else
-      flash[:notice] = @post.errors.full_messages
-    end
+    @post.destroy ? respond_to_block(root_path) : flash[:notice] = @post.errors.full_messages
   end
 
   def show
@@ -53,11 +45,30 @@ class PostsController < ApplicationController
   end
 
   def delete_image
-    @post = Post.find_by(id: params[:post_id])
-    render_error('Post') if @post.nil?
-    authorize @post
-    @index = params[:id].to_i
-    @post.images[@index].purge
+    if @post.nil?
+      render_error('Post')
+    else
+      authorize @post, :update?
+      @index = params[:id]
+      @post.images[@index].purge
+    end
+  end
+
+  def create_like
+    like_it
+    @likes = Like.total_likes_on_post(params[:post_id])
+    @post.nil? ? render_error('Post') : respond_to_block(root_path)
+  end
+
+  def destroy_like
+    flash[:notice] = 'Successfully unliked.'
+    like = Like.find_by(account_id: current_account.id, post_id: params[:id]).destroy
+    like.destroy if authorize like, :destroy?
+    @post.nil? ? render_error('Post') : @likes = Like.total_likes_on_post(params[:id])
+  end
+
+  def already_liked?
+    Like.exists?(account_id: current_account.id, post_id: params[:post_id])
   end
 
   private
@@ -68,11 +79,7 @@ class PostsController < ApplicationController
 
   def set_posts_and_stories
     @posts = policy_scope(Post)
-    @stories = [].concat current_account.stories
-    requests = Request.where(sender: current_account, status: 'accepted')
-    requests.each do |req|
-      @stories.concat(req.recipient.stories)
-    end
+    @stories = policy_scope(Story)
   end
 
   def set_post
@@ -83,5 +90,16 @@ class PostsController < ApplicationController
 
   def authorization
     authorize @post
+  end
+
+  def like_it
+    like = Like.new(account_id: current_account.id, post_id: params[:post_id])
+    authorize like, :create?
+    flash[:notice] = like.save ? 'Post was successfuly liked.' : like.errors.full_messages
+  end
+
+  def set_post_from_post_id
+    @post = Post.find_by(id: params[:post_id])
+    render_error('Post') if @post.nil?
   end
 end

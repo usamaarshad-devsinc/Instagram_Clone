@@ -2,9 +2,9 @@
   <div class="div_like_button_<%= post.id %>">
     <% total_likes=  total_likes_on_post(post) %>
     <% if already_liked?(post.id) %>
-      <%= render 'likes/unlike_form', post: post , total_likes: total_likes %>
+      <%= render 'posts/unlike_form', post: post , total_likes: total_likes %>
     <% else %>
-        <%= render 'likes/like_form', post: post , total_likes: total_likes %>
+        <%= render 'posts/like_form', post: post , total_likes: total_likes %>
     <% end %>
     </div>
 <div >
