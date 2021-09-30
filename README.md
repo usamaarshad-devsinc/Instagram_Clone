@@ -1,37 +1,14 @@
 # README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version (2.7)
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# System dependencies
-## Ruby Version
+## System dependencies
+### Ruby Version
 * ruby '2.7.2'
-## Rails Version
+### Rails Version
 * gem 'rails', '~> 5.2.6'
-## Postgres Version
+### Postgres Version
 * gem 'pg', '~> 1.2', '>= 1.2.3'
 * To install dependencies mentioned in Gemfile
   Command: 'bundle install'
-# Configuration
+## Configuration
 
 * Mailer configurations are set for forgot password functionality.
 * Default mailer sender is 'usama.arshad@devsinc.com'.
@@ -40,7 +17,7 @@ Things you may want to cover:
 * Policies are written using Pundit (requirements mentioned).
 * Image files are using cloudinary for storage.
 
-# Database creation and initialization
+## Database creation and initialization
 
 * To setup database (create, load schema, populate with initial test data)
   Command: 'rails db:setup'
@@ -52,6 +29,6 @@ Things you may want to cover:
   You can initially login with these credentials otherwise
   you can signup for your personal account.
 
-# Services
+## Services
 
 * StoryExpires Job is created to destroy the story after 24 hours of creation(if it still exists).
