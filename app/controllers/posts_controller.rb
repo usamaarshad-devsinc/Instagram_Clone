@@ -66,7 +66,8 @@ class PostsController < ApplicationController
 
   def destroy_like
     flash[:notice] = 'Successfully unliked.'
-    Like.find_by(account_id: current_account.id, post_id: params[:id]).destroy
+    like = Like.find_by(account_id: current_account.id, post_id: params[:id]).destroy
+    like.destroy if authorize like, :destroy?
     @post.nil? ? render_error('Post') : @likes = Like.total_likes_on_post(params[:id])
   end
 
@@ -97,6 +98,7 @@ class PostsController < ApplicationController
 
   def like_it
     like = Like.new(account_id: current_account.id, post_id: params[:post_id])
+    authorize like, :create?
     flash[:notice] = like.save ? 'Post was successfuly liked.' : like.errors.full_messages
   end
 
