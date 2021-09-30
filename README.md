@@ -23,20 +23,12 @@ Things you may want to cover:
 
 * ...
 # System dependencies
-
+## Ruby Version
 * ruby '2.7.2'
+## Rails Version
 * gem 'rails', '~> 5.2.6'
-* gem 'devise'
-* gem 'pundit'
-* gem 'bootstrap-sass', '~> 3.4.1'
-* gem 'sass-rails', '~> 5.0'
+## Postgres Version
 * gem 'pg', '~> 1.2', '>= 1.2.3'
-* gem 'activestorage-cloudinary-service'
-* gem 'cloudinary'
-* gem 'rubocop'
-* gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
-* gem 'rubocop-performance'
-* gem 'rubocop-rails'
 * To install dependencies mentioned in Gemfile
   Command: 'bundle install'
 # Configuration
@@ -59,3 +51,7 @@ Things you may want to cover:
   Email: hassan.raza@devsinc.com with password: 123456789
   You can initially login with these credentials otherwise
   you can signup for your personal account.
+
+# Services
+
+* StoryExpires Job is created to destroy the story after 24 hours of creation(if it still exists).
