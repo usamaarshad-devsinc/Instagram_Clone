@@ -13,8 +13,4 @@ class AccountsController < ApplicationController
     @account = Account.find_by(id: params[:account])
     render_error('Profile') if @account.nil?
   end
-
-  private
-
-  def pending_requests; end
 end
