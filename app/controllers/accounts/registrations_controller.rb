@@ -20,7 +20,7 @@ module Accounts
     # PUT /resource
     def update
       # super
-      account_params = params.require(:account).permit(:full_name, :username, :profile_pic, :is_private)
+      account_params = params.require(:account).permit(:full_name, :username, :profile_pic, :kind)
       current_account.update(account_params)
     end
 

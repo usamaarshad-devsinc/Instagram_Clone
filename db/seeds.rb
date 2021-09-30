@@ -4,7 +4,7 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
 usama = Account.new({ email: 'usama.arshad@devsinc.com', full_name: 'Usama Arshad',
-                      username: 'usama arshad', is_private: true, password: '123456789',
+                      username: 'usama arshad', kind: 'private', password: '123456789',
                       password_confirmation: '123456789' })
 usama.save(validate: false)
 post1 = Post.new(description: 'First Post', account_id: usama.id)
@@ -12,7 +12,7 @@ post1.images.attach(io: File.open(Rails.root.join('app/assets/images/Ruby.jpg'))
 post1.save
 
 hassan = Account.new({ email: 'hassan.raza@devsinc.com', full_name: 'Hassan Raza',
-                       username: 'hassan raza', is_private: true, password: '123456789',
+                       username: 'hassan raza', kind: 'private', password: '123456789',
                        password_confirmation: '123456789' })
 hassan.save(validate: false)
 post2 = Post.new(description: 'First Post', account_id: hassan.id)

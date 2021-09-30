@@ -29,13 +29,13 @@ class RequestsController < ApplicationController
   end
 
   def generate_request(recipient_id)
-    @request = Request.new(recipient_id: recipient_id, sender_id: current_account.id)
+    @request = current_account.requests_sent.new(recipient_id: recipient_id)
     authorize @request, :create?
     recipient = Account.find_by(id: recipient_id)
     if recipient.nil?
       render_error('Account')
     else
-      @request.status = recipient.is_private ? 'pending' : 'accepted'
+      @request.status = recipient.kind.eql?('private') ? 'pending' : 'accepted'
       flash[:notice] = @request.save ? 'Request sent!' : @request.errors.full_messages
     end
   end

@@ -56,19 +56,19 @@ class PostsController < ApplicationController
 
   def create_like
     like_it
-    @likes = Like.total_likes_on_post(params[:post_id])
+    @likes = @post.likes.total_likes_on_post(params[:post_id])
     @post.nil? ? render_error('Post') : respond_to_block(root_path)
   end
 
   def destroy_like
     flash[:notice] = 'Successfully unliked.'
-    like = Like.find_by(account_id: current_account.id, post_id: params[:id]).destroy
+    like = current_account.likes.find_by(post_id: params[:id])
     like.destroy if authorize like, :destroy?
-    @post.nil? ? render_error('Post') : @likes = Like.total_likes_on_post(params[:id])
+    @likes = Like.total_likes_on_post(params[:id])
   end
 
   def already_liked?
-    Like.exists?(account_id: current_account.id, post_id: params[:post_id])
+    current_account.likes.exists?(post_id: params[:post_id])
   end
 
   private
@@ -93,7 +93,7 @@ class PostsController < ApplicationController
   end
 
   def like_it
-    like = Like.new(account_id: current_account.id, post_id: params[:post_id])
+    like = current_account.likes.new(post_id: params[:post_id])
     authorize like, :create?
     flash[:notice] = like.save ? 'Post was successfuly liked.' : like.errors.full_messages
   end

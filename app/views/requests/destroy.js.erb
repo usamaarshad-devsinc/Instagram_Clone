@@ -11,7 +11,7 @@ else
     $(".followers_count").replaceWith('<h5 class="title followers_count"><strong>Followers (<%= followers_count(@request.recipient_id) %>) <strong></h5>')
   }
   $("#notice").text('Successfully Unfollowed.')
-  if ('<%= @request.recipient.is_private.to_s %>' == 'true') {
+  if ('<%= @request.recipient.kind %>' == 'private') {
     $(".show_profile").remove()
   }
 }
