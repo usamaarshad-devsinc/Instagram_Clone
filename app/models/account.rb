@@ -22,9 +22,10 @@ class Account < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true, format: { with: /\A[a-z0-9-_]+\z/ }, length: { in: 6..24 }
   validates :full_name, presence: true, format: { with: /\A[a-zA-Z ]{6,24}+\z/, message: 'only allows letters' }
+  validates :profile_pic, format: { with: /\.(png|jpg|jpeg)\z/i, message: 'only images are allowed' }
+
   after_update :accept_pending_requests, if: :kind_changed
 
-  # enum kind: { private: 0, public: 1 }
   private
 
   def accept_pending_requests

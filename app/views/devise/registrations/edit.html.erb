@@ -13,7 +13,7 @@
             <%= image_tag('default.png', width: 300,class:"rounded border-top-0 ")  %>
           <% end %>
         </p>
-        <%= f.file_field :profile_pic , class: "d-inline-block"%>
+        <%= f.file_field :profile_pic, accept: 'image/png,image/jpg,image/jpeg' , class: "d-inline-block"%>
       </p>
       <div class="form-check form-switch d-flex justify-content-around">
         <div class="d-inline-block btn btn-<%= current_account.kind.eql?('private') ? 'primary' : 'secondary' %>">
