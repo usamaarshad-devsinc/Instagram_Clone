@@ -7,6 +7,7 @@ class Post < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many_attached :images, dependent: :destroy
+  validates :images, format: { with: /\.(png|jpg|jpeg)\z/i, message: 'only images are allowed' }
   validate :number_of_images
 
   private
