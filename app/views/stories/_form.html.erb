@@ -7,7 +7,7 @@
         <%#= link_to 'Remove',to: @story.image.purge %>
       <% end %>
     </p>
-    <%= form.file_field :image , class:" d-inline-block", style:"padding-left:7rem;", required: true %>
+    <%= form.file_field :image, accept: 'image/png,image/jpg,image/jpeg', class:" d-inline-block", style:"padding-left:7rem;", required: true %>
   </p>
   <p>
     <%= form.label :description %><br>

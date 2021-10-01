@@ -5,6 +5,7 @@ class Story < ApplicationRecord
 
   has_one_attached :image
   belongs_to :account
+  validates :image, format: { with: /\.(png|jpg|jpeg)\z/i, message: 'only images are allowed' }
   validate :presence_check
   after_create :set_expiry
 

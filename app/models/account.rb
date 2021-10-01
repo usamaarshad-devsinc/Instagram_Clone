@@ -21,12 +21,14 @@ class Account < ApplicationRecord
                            inverse_of: 'sender'
 
   validates :username, presence: true, uniqueness: true, format: { with: /\A[a-z0-9-_]+\z/ }, length: { in: 6..24 }
-  validates :full_name, presence: true, format: { with: /\A[a-zA-Z]{6,24}+\z/, message: 'only allows letters' }
-  after_update :check_for_pending_requests
+  validates :full_name, presence: true, format: { with: /\A[a-zA-Z ]{6,24}+\z/, message: 'only allows letters' }
+  validates :profile_pic, format: { with: /\.(png|jpg|jpeg)\z/i, message: 'only images are allowed' }
+
+  after_update :accept_pending_requests, if: :kind_changed
 
   private
 
-  def check_for_pending_requests
-    requests_recieved.where(status: 'pending').update(status: 'accepted') unless is_private
+  def accept_pending_requests
+    requests_recieved.where(status: 'pending').update(status: 'accepted') unless kind.eql?('private')
   end
 end

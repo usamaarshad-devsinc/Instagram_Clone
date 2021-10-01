@@ -33,7 +33,7 @@ CREATE TABLE public.accounts (
     updated_at timestamp without time zone NOT NULL,
     full_name text NOT NULL,
     username text NOT NULL,
-    is_private boolean DEFAULT false
+    kind text DEFAULT 'public'::text
 );
 
 
@@ -458,6 +458,13 @@ CREATE UNIQUE INDEX index_accounts_on_reset_password_token ON public.accounts US
 
 
 --
+-- Name: index_accounts_on_username; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_accounts_on_username ON public.accounts USING btree (username);
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -597,6 +604,7 @@ ALTER TABLE ONLY public.posts
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('0'),
 ('20210907111023'),
 ('20210910175211'),
 ('20210910181446'),
@@ -612,6 +620,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210911113404'),
 ('20210911192244'),
 ('20210915074943'),
-('20210915184551');
+('20210915184551'),
+('20210924203524'),
+('20210930133911'),
+('20210930134907');
 
 
