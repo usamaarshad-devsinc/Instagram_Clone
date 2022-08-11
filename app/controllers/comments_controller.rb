@@ -6,7 +6,6 @@ class CommentsController < ApplicationController
 
   def create
     @comment = current_account.comments.new(comments_params)
-    authorization
     flash[:notice] = @comment.save ? 'Comment was successfuly posted.' : 'Some errors occur in commenting this post.'
     respond_to_block(post_path(@comment.post))
   end
