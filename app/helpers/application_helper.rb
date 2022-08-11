@@ -22,6 +22,6 @@ module ApplicationHelper
   end
 
   def show_profile?(account)
-    request_accepted?(account) || account.kind.eql?('public') || (account.id == current_account.id)
+    request_accepted?(account) || !account.is_private? || (account.id == current_account.id)
   end
 end

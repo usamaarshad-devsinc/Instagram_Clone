@@ -29,6 +29,6 @@ class Account < ApplicationRecord
   private
 
   def accept_pending_requests
-    requests_recieved.where(status: 'pending').update(status: 'accepted') unless kind.eql?('private')
+    requests_recieved.where(status: 'pending').update(status: 'accepted') unless is_private?
   end
 end

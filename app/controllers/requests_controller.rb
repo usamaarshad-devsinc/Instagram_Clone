@@ -35,7 +35,7 @@ class RequestsController < ApplicationController
     if recipient.nil?
       render_error('Account')
     else
-      @request.status = recipient.kind.eql?('private') ? 'pending' : 'accepted'
+      @request.status = recipient.is_private? ? 'pending' : 'accepted'
       flash[:notice] = @request.save ? 'Request sent!' : @request.errors.full_messages
     end
   end

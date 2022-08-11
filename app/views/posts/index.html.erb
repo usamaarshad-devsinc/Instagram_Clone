@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <% if current_account.kind.eql?('private') %>
+  <% if current_account.is_private? %>
     <% if @requests.size > 0 %>
       <div class="card col-2 requests_col" >
         <div class="card-header bottom_border">
